@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  .box {
+    width: 50rem;
+    height: 35rem;
+    border-radius: 3rem;
+    background: #e2e6e9;
+    box-shadow: 2rem 2rem 4rem #b3b6b8,
+      -2rem -2rem 4rem #fff;
+    padding-top: 3rem;
+    text-align: center;
+    .title {
+      height: 15rem;
+      width: 15rem;
+    }
+    .form {
+      .button_box {
+        display: inline-flex;
+        margin: 0 auto;
+        .button {
+          width: 10rem;
+        }
+      }
+    }
+  }
+}

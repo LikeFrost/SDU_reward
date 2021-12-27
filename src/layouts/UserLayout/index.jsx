@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { ConfigProvider } from '@alifd/next';
-import styles from './index.module.scss';
-import Nav from './components/Nav';
+import { Shell, ConfigProvider } from '@alifd/next';
 
 (function () {
   const throttle = function (type, name, obj = window) {
@@ -27,7 +25,7 @@ import Nav from './components/Nav';
   }
 })();
 
-const BasicLayout = ({ children }) => {
+const UserLayout = ({ children }) => {
   const getDevice = (width) => {
     const isPhone = typeof navigator !== 'undefined' && navigator && navigator.userAgent.match(/phone/gi);
 
@@ -51,11 +49,8 @@ const BasicLayout = ({ children }) => {
 
   return (
     <ConfigProvider device={device}>
-      <>
-        <Nav />
-        {children}
-      </>
+      {children}
     </ConfigProvider>
   );
 };
-export default BasicLayout;
+export default UserLayout;
