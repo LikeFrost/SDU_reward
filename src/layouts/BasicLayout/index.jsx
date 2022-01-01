@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { ConfigProvider } from '@alifd/next';
+import { ConfigProvider, Shell } from '@alifd/next';
 import styles from './index.module.scss';
 import Nav from './components/Nav';
+import Menu from './components/Menu';
 
 (function () {
   const throttle = function (type, name, obj = window) {
@@ -53,7 +54,10 @@ const BasicLayout = ({ children }) => {
     <ConfigProvider device={device}>
       <>
         <Nav />
-        {children}
+        <div className={styles.flex}>
+          {children}
+          <Menu />
+        </div>
       </>
     </ConfigProvider>
   );
