@@ -1,8 +1,9 @@
-import { lazy } from 'ice';
 import BasicLayout from '@/layouts/BasicLayout';
 import UserLayout from './layouts/UserLayout';
 import Login from './pages/Login';
 import Info from './pages/Info';
+import Reward from './pages/Reward';
+import Suggestion from './pages/Suggestion';
 
 const routerConfig = [
   {
@@ -27,6 +28,16 @@ const routerConfig = [
         exact: true,
         component: Info,
       },
+      // {
+      //   path: 'reward',
+      //   exact: true,
+      //   component: Reward,
+      // },
+      // {
+      //   path: 'suggestion',
+      //   exact: true,
+      //   component: Suggestion,
+      // },
     ],
   },
 ];

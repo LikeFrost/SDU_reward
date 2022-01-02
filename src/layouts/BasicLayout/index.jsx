@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { ConfigProvider, Shell } from '@alifd/next';
+import { ConfigProvider } from '@alifd/next';
 import styles from './index.module.scss';
 import Nav from './components/Nav';
 import Menu from './components/Menu';
+import store from '@/store';
+import Info from '@/pages/Info';
+import Reward from '@/pages/Reward';
+import Suggestion from '@/pages/Suggestion';
 
 (function () {
   const throttle = function (type, name, obj = window) {
@@ -28,7 +32,9 @@ import Menu from './components/Menu';
   }
 })();
 
-const BasicLayout = ({ children }) => {
+const BasicLayout = () => {
+  const [dataNow] = store.useModel('now');
+  const { now } = dataNow;
   const getDevice = (width) => {
     const isPhone = typeof navigator !== 'undefined' && navigator && navigator.userAgent.match(/phone/gi);
 
@@ -55,7 +61,9 @@ const BasicLayout = ({ children }) => {
       <>
         <Nav />
         <div className={styles.flex}>
-          {children}
+          {now === 'Info' && <Info />}
+          {now === 'Reward' && <Reward />}
+          {now === 'Suggestion' && <Suggestion />}
           <Menu />
         </div>
       </>
