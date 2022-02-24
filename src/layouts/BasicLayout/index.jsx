@@ -60,10 +60,12 @@ const BasicLayout = () => {
     <ConfigProvider device={device}>
       <>
         <Nav />
-        <div className={styles.flex}>
+        <div className={styles.content}>
           {now === 'Info' && <Info />}
           {now === 'Reward' && <Reward />}
           {now === 'Suggestion' && <Suggestion />}
+        </div>
+        <div className={styles.menu}>
           <Menu />
         </div>
       </>

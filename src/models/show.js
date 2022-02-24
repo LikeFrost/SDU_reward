@@ -1,6 +1,6 @@
 export default {
   state: {
-    show: false,
+    show: true,
   },
   reducers: {
     setShow(pre, now) {
