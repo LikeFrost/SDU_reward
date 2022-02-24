@@ -3,13 +3,13 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  .border{
+  .border {
     width: 51.5rem;
     height: 36.5rem;
     border-radius: 5rem;
     background: rgb(248, 252, 253);
     box-shadow: var(--blackShadow),
-                var(--whiteShadow);
+      var(--whiteShadow);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -19,7 +19,7 @@
       border-radius: 4.5rem;
       background: var(--bgGray);
       box-shadow: inset var(--blackShadow),
-                inset var(--whiteShadow);
+        inset var(--whiteShadow);
       padding-top: 3rem;
       text-align: center;
       .title {

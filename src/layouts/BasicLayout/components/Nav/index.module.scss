@@ -1,51 +1,54 @@
-.nav{
-    display: flex;
-    width: 100vw;
-    height: max-content;
-    align-items: center;
-    padding: 2.5rem;
-    user-select: none;
+.nav {
+  display: flex;
+  width: 100vw;
+  height: max-content;
+  align-items: center;
+  padding: 2.5rem;
+  user-select: none;
 }
-.logo{
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    border-radius: 2rem;
-    background: var(--bgShadow);
-    box-shadow:  var(--buttonBlackShadow),
-                var(--buttonWhiteShadow);
-    color: var(--textColor);
-    font-weight: 600;
-    font-size: 1.1rem;
+.logo {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  border-radius: 2rem;
+  background: var(--bgShadow);
+  box-shadow: var(--buttonBlackShadow),
+    var(--buttonWhiteShadow);
+  color: var(--textColor);
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-shadow: var(--textBlackShadow),
+    var(--textWhiteShadow);
 }
-.svg{
-    border-radius: 100%;
-    box-shadow:  var(--buttonBlackShadow),
-                var(--buttonWhiteShadow);
+.svg {
+  border-radius: 100%;
+  box-shadow: var(--buttonBlackShadow),
+    var(--buttonWhiteShadow);
 }
-.icon{
-    transition: all .5s ease;
+.icon {
+  transition: all .5s ease;
+  filter: drop-shadow(var(--svgDropShadow));
 }
-.menu{
-    padding: 1rem;
-    margin-left: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100%;
-    background: var(--bgShadow);
-    box-shadow:  var(--buttonBlackShadow),
-                var(--buttonWhiteShadow);
-    color: var(--textColor);
-    transition: all .5s ease;
+.menu {
+  padding: 1rem;
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  background: var(--bgShadow);
+  box-shadow: var(--buttonBlackShadow),
+    var(--buttonWhiteShadow);
+  color: var(--textColor);
+  transition: all .5s ease;
 }
-.menu:hover{
-    transform: rotate(40deg);
+.menu:hover {
+  transform: rotate(40deg);
 }
-.menu:active{
-    box-shadow: 0 0 0 rgba(0,0,0,0),
-                0 0 0 rgba(0,0,0,0),
-                inset var(--buttonBlackShadow),
-                inset var(--buttonWhiteShadow);
-    transition: all .1s ease-out;
+.menu:active {
+  box-shadow: 0 0 0 rgba(0,0,0,0),
+    0 0 0 rgba(0,0,0,0),
+    inset var(--buttonBlackShadow),
+    inset var(--buttonWhiteShadow);
+  transition: all .1s ease-out;
 }

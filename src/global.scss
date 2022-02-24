@@ -4,23 +4,28 @@
 
 
 body {
-  --bgGray: #EBF0F5;
-  --bgShadow:#E3E8EE;
+  --bgGray: #ebf0f5;
+  --bgShadow: #e3e8ee;
   --whiteShadow: -1rem -1rem 2rem rgba(255, 255, 255, 0.5);
   --blackShadow: 1rem 1rem 2rem rgba(214,218,223,0.8);
 
   --circleWhiteShadow: -.5rem -.5rem 2rem rgba(255, 255, 255, 1);
   --circleBlackShadow: .5rem .5rem 2rem rgba(198, 202, 207, 1);
 
-  --buttonWhiteShadow:.3rem .3rem .6rem rgba(121,130,160,0.55);
-  --buttonBlackShadow:-.3rem -.3rem .6rem rgba(255,255,255,1);
+  --buttonWhiteShadow: .3rem .3rem .6rem rgba(121,130,160,0.55);
+  --buttonBlackShadow: -.3rem -.3rem .6rem rgba(255,255,255,1);
 
-  --textColor:#87929D;
+  --textWhiteShadow: .1rem .1rem .4rem rgba(121,130,160,0.55);
+  --textBlackShadow: -.1rem -.1rem .4rem rgba(255,255,255,1);
+
+  --svgDropShadow: .1rem .1rem .1rem rgb(121,130,160);
+
+  --textColor: #87929d;
   
   -webkit-font-smoothing: antialiased;
   background: var(--bgGray);
 }
 $browser-default-font-size:16px !default;
-@function px($px){
+@function px($px) {
   @return $px / $browser-default-font-size * 1rem;
 }
