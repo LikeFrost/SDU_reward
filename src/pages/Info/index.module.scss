@@ -26,7 +26,7 @@
     inset var(--circleWhiteShadow);
   height: 125vh;
   width: 125vh;
-  border-radius: 125vh;
+  border-radius: 100%;
   position: absolute;
   top: -18vh;
   left: -33vh;
@@ -36,6 +36,7 @@
   height: 30vh;
   width: 30vh;
   transition: all .5s ease;
+  filter: drop-shadow(var(--svgDropShadow));
 }
 .pic_half {
   height: 60vh;
@@ -44,6 +45,7 @@
   left: 40vh;
   top: 30vh;
   transition: all .5s ease;
+  filter: drop-shadow(var(--svgDropShadow));
 }
 .ball {
   height: 72vh;
@@ -85,53 +87,34 @@
   position: absolute;
   top: 65vh;
   left: calc( 50vw + 15vh );
-    
-  padding: 1rem 2rem;
-  display: flex;
-  align-items: center;
-  border-radius: 2rem;
-  background: var(--bgShadow);
-  box-shadow: var(--buttonBlackShadow),
-    var(--buttonWhiteShadow);
-  color: var(--textColor);
-  font-weight: 600;
-  font-size: 1.1rem;
-  text-shadow: var(--textBlackShadow),
-    var(--textWhiteShadow);
-  transition: box-shadow .5s ease;
-}
-.button:active {
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0),
-    0 0 0 rgba(0, 0, 0, 0),
-    inset var(--buttonBlackShadow),
-    inset var(--buttonWhiteShadow);
-  font-size: 1rem;
-  transition: all .1s ease-out;
 }
 .button_half {
   position: absolute;
   bottom: 10vh;
   right: 10vh;
-    
-  padding: 1rem 2rem;
-  display: flex;
-  align-items: center;
-  border-radius: 2rem;
-  background: var(--bgShadow);
-  box-shadow: var(--buttonBlackShadow),
-    var(--buttonWhiteShadow);
+}
+.msg {
+  position: absolute;
+  left: 105vh;
+  top: 15vh;
   color: var(--textColor);
   font-weight: 600;
   font-size: 1.1rem;
   text-shadow: var(--textBlackShadow),
     var(--textWhiteShadow);
+  width: 30vw;
+  padding: 2rem;
   transition: all .5s ease;
 }
-.button_half:active {
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0),
-    0 0 0 rgba(0, 0, 0, 0),
-    inset var(--buttonBlackShadow),
-    inset var(--buttonWhiteShadow);
-  font-size: 1rem;
-  transition: all .1s ease-out;
+.title {
+  font-size: 3rem;
+  margin-bottom: 4rem;
+}
+.detail {
+  display: flex;
+  line-height: 3rem;
+}
+.content {
+  margin-left: 3rem;
+  letter-spacing: .1rem;
 }

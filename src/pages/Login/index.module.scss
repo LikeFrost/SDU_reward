@@ -7,9 +7,10 @@
     width: 51.5rem;
     height: 36.5rem;
     border-radius: 5rem;
-    background: rgb(248, 252, 253);
+    background: var(--bgGray);
     box-shadow: var(--blackShadow),
       var(--whiteShadow);
+    
     display: flex;
     align-items: center;
     justify-content: center;
