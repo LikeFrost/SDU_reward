@@ -7,6 +7,7 @@ import store from '@/store';
 import Info from '@/pages/Info';
 import Reward from '@/pages/Reward';
 import Suggestion from '@/pages/Suggestion';
+import Home from '@/pages/Home';
 
 (function () {
   const throttle = function (type, name, obj = window) {
@@ -61,11 +62,10 @@ const BasicLayout = () => {
       <>
         <Nav />
         <div className={styles.content}>
+          {now === 'Home' && <Home />}
           {now === 'Info' && <Info />}
           {now === 'Reward' && <Reward />}
           {now === 'Suggestion' && <Suggestion />}
-        </div>
-        <div className={styles.menu}>
           <Menu />
         </div>
       </>

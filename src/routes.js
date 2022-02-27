@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Info from './pages/Info';
 import Reward from './pages/Reward';
 import Suggestion from './pages/Suggestion';
+import Home from './pages/Home';
 
 const routerConfig = [
   {
@@ -26,7 +27,7 @@ const routerConfig = [
       {
         path: '/',
         exact: true,
-        component: Info,
+        component: Home,
       },
       // {
       //   path: 'reward',

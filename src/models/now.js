@@ -1,6 +1,6 @@
 export default {
   state: {
-    now: 'Info',
+    now: 'Home',
   },
   reducers: {
     setNow(pre, now) {

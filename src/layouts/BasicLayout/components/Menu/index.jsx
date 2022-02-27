@@ -2,33 +2,18 @@ import React, { useState } from 'react';
 import styles from './index.module.scss';
 import store from '@/store';
 
-const initialState = [
-  {
-    title: '个人信息',
-    component: 'Info',
-    sel: true,
-  },
-  {
-    title: '奖励管理',
-    component: 'Reward',
-    sel: false,
-  },
-  {
-    title: '意见反馈',
-    component: 'Suggestion',
-    sel: false,
-  },
-];
-
 function Menu() {
-  const [menuConfig, setMenuConfig] = useState(initialState);
-  const [dataShow] = store.useModel('show');
+  const [dataShow, dispatchers_show] = store.useModel('show');
   const { show } = dataShow;
-  const [, dispatchers] = store.useModel('now');
-  const { setNow } = dispatchers;
+  const { setShow } = dispatchers_show;
+  const [, dispatchers_now] = store.useModel('now');
+  const { setNow } = dispatchers_now;
+  const [dataMenu, dispatchers_menu] = store.useModel('menu');
+  const { menuConfig } = dataMenu;
+  const { setMenu } = dispatchers_menu;
   const changeClick = (index) => {
     // eslint-disable-next-line prefer-const
-    let temp = menuConfig.slice();
+    let temp = JSON.parse(JSON.stringify(menuConfig));
     // eslint-disable-next-line prefer-const
     for (let i in temp) {
       if (i == index) {
@@ -36,13 +21,16 @@ function Menu() {
         setNow(temp[i].component);
       } else temp[i].sel = false;
     }
-    setMenuConfig(temp);
+    if (index === 0) {
+      setShow(true);
+    } else setShow(false);
+    setMenu(temp);
   };
   return (
     <div className={show ? styles.menu : styles.menu_hidden}>
       {menuConfig.map((item, index) => {
         return (
-          <div className={item.sel ? styles.menu_item_sel : styles.menu_item} onClick={() => changeClick(index)}>
+          <div className={item.sel ? styles.menu_item_sel : styles.menu_item} onClick={() => changeClick(index)} key={index}>
             {item.title}
             <div className={styles.menu_circle}> </div>
           </div>

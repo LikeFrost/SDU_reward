@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from './index.module.scss';
 
-function Input() {
+function Input({ type, placeholder, id }) {
   return (
     <div>
-      Input
+      <input type={type} className={styles.input} placeholder={placeholder} id={id} />
     </div>
   );
 }

@@ -1,27 +1,9 @@
+
 .box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  user-select: none;
-  transition: all .5s ease;
-}
-.box_half {
   width: 100vw;
   user-select: none;
 }
 .circle {
-  height: 50vh;
-  width: 50vh;
-  border-radius: 100%;
-  box-shadow: inset var(--circleBlackShadow),
-    inset var(--circleWhiteShadow);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all .5s ease;
-}
-.circle_half {
   box-shadow: inset var(--circleBlackShadow),
     inset var(--circleWhiteShadow);
   height: 125vh;
@@ -33,65 +15,13 @@
   transition: all .5s ease;
 }
 .pic {
-  height: 30vh;
-  width: 30vh;
-  transition: all .5s ease;
-  filter: drop-shadow(var(--svgDropShadow));
-}
-.pic_half {
-  height: 60vh;
-  width: 60vh;
+  height: 70vh;
+  width: 70vh;
   position: relative;
   left: 40vh;
   top: 30vh;
   transition: all .5s ease;
   filter: drop-shadow(var(--svgDropShadow));
-}
-.ball {
-  height: 72vh;
-  width: 72vh;
-  position: absolute;
-  fill: none;
-  stroke-width: 15;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  stroke: var(--bgShadow);
-  stroke-dasharray: 500 2013;
-  animation: rotate 4s infinite linear; 
-  filter: drop-shadow(var(--buttonBlackShadow));
-  z-index: -100;
-}
-.ball2 {
-  height: 72vh;
-  width: 72vh;
-  position: absolute;
-  fill: none;
-  stroke-width: 15;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  stroke: var(--bgShadow);
-  stroke-dasharray: 500 2013;
-  animation: rotate 4s infinite -1s linear; 
-  filter: drop-shadow(var(--buttonBlackShadow));
-  z-index: -100;
-}
-@keyframes rotate {
-  0% {
-    stroke-dashoffset: 0;
-  }
-  100% {
-    stroke-dashoffset: 5027.247;
-  }
-}
-.button {
-  position: absolute;
-  top: 65vh;
-  left: calc( 50vw + 15vh );
-}
-.button_half {
-  position: absolute;
-  bottom: 10vh;
-  right: 10vh;
 }
 .msg {
   position: absolute;
@@ -105,6 +35,7 @@
   width: 30vw;
   padding: 2rem;
   transition: all .5s ease;
+  text-align: center;
 }
 .title {
   font-size: 3rem;
@@ -117,4 +48,9 @@
 .content {
   margin-left: 3rem;
   letter-spacing: .1rem;
+}
+.button_array{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
 }
