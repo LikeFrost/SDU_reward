@@ -1,4 +1,53 @@
-.div {
+.box{
+  width: 80vw;
+  height: 80vh;
+  top: 8rem;
+  left: 5vw;
   position: absolute;
-  top: 0;
+}
+.tab_array{
+  display: flex;
+}
+.tab{
+  font-size: 1.1rem;
+  height: 2.8rem;
+  width: 6.4rem;
+  margin: 0.8rem 0.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // background-color: var(--bgShadow);
+  // border-radius: 0.5rem;
+  // box-shadow: inset var(--buttonBlackShadow),inset var(--buttonWhiteShadow);
+  color: var(--textColor);
+  text-shadow: var(--textBlackShadow),var(--textWhiteShadow);
+  user-select: none;
+  transition: all .5s ease;
+}
+.tab_sel{
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 6.4rem;
+  height: 3.6rem;
+  margin: 0.8rem 0.4rem 0rem 0.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--textColor);
+  text-shadow: var(--textBlackShadow),var(--textWhiteShadow);
+  user-select: none;
+  box-shadow: var(--buttonWhiteShadow);
+  background-color: var(--bgGray);
+  border-radius:1rem 1rem 0 0;
+  transition: all .5s ease;
+}
+.content{
+  border-radius: 1.5rem;
+  box-shadow: var(--blackShadow),var(--whiteShadow);
+  width: 80vw;
+  height: 70vh;
+}
+.tip{
+  color: var(--textColor);
+  text-shadow: var(--textBlackShadow),var(--textWhiteShadow);
 }

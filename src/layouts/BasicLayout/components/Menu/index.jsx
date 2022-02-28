@@ -21,7 +21,7 @@ function Menu() {
         setNow(temp[i].component);
       } else temp[i].sel = false;
     }
-    if (index === 0) {
+    if (index === 0 || index === 2) {
       setShow(true);
     } else setShow(false);
     setMenu(temp);
