@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ConfigProvider } from '@alifd/next';
+import { ConfigProvider, Animate } from '@alifd/next';
 import styles from './index.module.scss';
 import Nav from './components/Nav';
 import Menu from './components/Menu';
@@ -8,6 +8,7 @@ import Info from '@/pages/Info';
 import Reward from '@/pages/Reward';
 import Suggestion from '@/pages/Suggestion';
 import Home from '@/pages/Home';
+import Dialog from '@/components/Dialog';
 
 (function () {
   const throttle = function (type, name, obj = window) {
@@ -60,6 +61,7 @@ const BasicLayout = () => {
   return (
     <ConfigProvider device={device}>
       <>
+        <Dialog />
         <Nav />
         <div className={styles.content}>
           {now === 'Home' && <Home />}

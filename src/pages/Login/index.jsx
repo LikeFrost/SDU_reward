@@ -1,41 +1,85 @@
-import { Form, Input } from '@alifd/next';
 import React from 'react';
 import styles from './index.module.scss';
 import { useHistory } from 'ice';
+import Input from '@/components/Input';
+import Button from '@/components/Button';
+import store from '@/store';
 
-const FormItem = Form.Item;
-const formItemLayout = {
-  labelCol: {
-    span: 5,
-  },
-  wrapperCol: {
-    span: 14,
-  },
-};
 function Login() {
   const history = useHistory();
-  const submitFrom = (e) => {
-    if (e.SDUNumber && e.password) {
-      history.push('home');
+  const [dataDialog, dispatchers_dialog] = store.useModel('dialog');
+  const { dialogConfig } = dataDialog;
+  const { setDialog } = dispatchers_dialog;
+  const login = () => {
+    const SDU_number = document.getElementById('SDU_number').value;
+    const password = document.getElementById('password').value;
+    const reg = /^[0-9]+.?[0-9]*$/;
+    let temp;
+    if (SDU_number === '' || !password) {
+      temp = {
+        showDialog: true,
+        title: '登录失败！',
+        text: '学号或密码不能为空，请核对后提交',
+        state: 'failure',
+        showButton: true,
+      };
+    } else if (!reg.test(SDU_number) || (SDU_number.length !== 12 && SDU_number.length !== 9)) {
+      temp = {
+        showDialog: true,
+        title: '格式错误！',
+        text: '学号格式错误，请核对后提交',
+        state: 'failure',
+        showButton: true,
+      };
+    } else if (password.length < 6) {
+      temp = {
+        showDialog: true,
+        title: '格式错误！',
+        text: '密码不得小于6位，请核对后提交',
+        state: 'failure',
+        showButton: true,
+      };
+    } else if (password.length > 20) {
+      temp = {
+        showDialog: true,
+        title: '格式错误！',
+        text: '密码不得大于20位，请核对后提交',
+        state: 'failure',
+        showButton: true,
+      };
+    } else {
+      // denglu
+      temp = {
+        showDialog: true,
+        title: '登录成功！',
+        text: '登陆成功，2s后进入主页',
+        state: 'success',
+        showButton: false,
+      };
+      setTimeout(() => {
+        temp = {
+          showDialog: false,
+        };
+        setDialog(temp);
+        history.push('home');
+      }, 2000);
     }
-    console.log(e.SDUNumber);
+    setDialog(temp);
   };
   return (
     <div className={styles.container}>
       <div className={styles.border}>
         <div className={styles.box}>
-          <img className={styles.title} src="../../../img/icon-login.svg" />
-          <Form {...formItemLayout} size="large" className={styles.form}>
-            <FormItem className={styles.form_item} name="SDUNumber" label="学号" required requiredMessage="请输入学号!">
-              <Input placeholder="请输入学号" />
-            </FormItem>
-            <FormItem className={styles.form_item} name="password" label="密码" required requiredMessage="请输入密码!" hasFeedback={false}>
-              <Input.Password placeholder="请输入密码" />
-            </FormItem>
-            <FormItem className={styles.button_box}>
-              <Form.Submit className={styles.button} onClick={submitFrom} validate>登录</Form.Submit>
-            </FormItem>
-          </Form>
+          <img className={styles.svg} src="../../../img/icon-login.svg" />
+          <div className={styles.detail}>
+            <div className={styles.tab}>学号</div>
+            <div className={styles.content}><Input type="text" placeholder="请输入学号" id="SDU_number" style={styles.input} /></div>
+          </div>
+          <div className={styles.detail}>
+            <div className={styles.tab}>密码</div>
+            <div className={styles.content}><Input type="password" placeholder="请输入密码" id="password" style={styles.input} /></div>
+          </div>
+          <Button myClassName={styles.button} myClick={login} content="登&nbsp;&nbsp;&nbsp;&nbsp;录" />
         </div>
       </div>
     </div>

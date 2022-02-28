@@ -3,40 +3,62 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  .border {
-    width: 51.5rem;
-    height: 36.5rem;
-    border-radius: 5rem;
-    background: var(--bgGray);
-    box-shadow: var(--blackShadow),
-      var(--whiteShadow);
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .box {
-      width: 50rem;
-      height: 35rem;
-      border-radius: 4.5rem;
-      background: var(--bgGray);
-      box-shadow: inset var(--blackShadow),
-        inset var(--whiteShadow);
-      padding-top: 3rem;
-      text-align: center;
-      .title {
-        height: 15rem;
-        width: 15rem;
-      }
-      .form {
-        .button_box {
-          display: inline-flex;
-          margin: 0 auto;
-          .button {
-            width: 10rem;
-          }
-        }
-      }
-    }
-  }
-  
+}
+.border {
+  border-radius: 5rem;
+  background: var(--bgGray);
+  box-shadow: var(--blackShadow),
+    var(--whiteShadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.box {
+  width: 55vw;
+  margin: 1vw;
+  border-radius: 4.5rem;
+  background: var(--bgGray);
+  box-shadow: inset var(--blackShadow),
+    inset var(--whiteShadow);
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.svg {
+  height: 20vh;
+  filter: drop-shadow(var(--svgDropShadow));
+  margin-bottom: 3rem;
+  user-select: none;
+}
+.detail {
+  display: flex;
+  align-items: center;
+  line-height: 4rem;
+  color: var(--textColor);
+  font-weight: 500;
+  font-size: 1.2rem;
+  text-shadow: var(--textBlackShadow),
+    var(--textWhiteShadow);
+  transition: all .5s ease;
+  text-align: center;
+  position: relative;
+}
+.tab{
+  position: absolute;
+  left: -2.5rem;
+  user-select: none;
+}
+.content {
+  margin-left: 1rem;
+  letter-spacing: .1rem;
+}
+.input {
+ width: 20vw; 
+ height: 5vh;
+}
+.button{
+  text-align: center;
+  height: 6vh;
+  margin-top: 1.5rem;
 }

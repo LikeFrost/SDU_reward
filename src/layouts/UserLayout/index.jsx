@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Shell, ConfigProvider } from '@alifd/next';
+import Dialog from '@/components/Dialog';
 
 (function () {
   const throttle = function (type, name, obj = window) {
@@ -49,7 +50,10 @@ const UserLayout = ({ children }) => {
 
   return (
     <ConfigProvider device={device}>
-      {children}
+      <>
+        <Dialog />
+        {children}
+      </>
     </ConfigProvider>
   );
 };

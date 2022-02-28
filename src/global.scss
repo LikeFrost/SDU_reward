@@ -6,19 +6,22 @@
 body {
   --bgGray: #ebf0f5;
   --bgShadow: #e3e8ee;
+  --mask:rgb(0, 0, 0, 0.4);
   --whiteShadow: -1rem -1rem 2rem rgba(255, 255, 255, 0.5);
   --blackShadow: 1rem 1rem 2rem rgba(214,218,223,0.8);
 
   --circleWhiteShadow: -.5rem -.5rem 2rem rgba(255, 255, 255, 1);
   --circleBlackShadow: .5rem .5rem 2rem rgba(198, 202, 207, 1);
 
-  --buttonWhiteShadow: .3rem .3rem .6rem rgba(121,130,160,0.55);
-  --buttonBlackShadow: -.3rem -.3rem .6rem rgba(255,255,255,1);
+  --buttonBlackShadow: .3rem .3rem .6rem rgba(121,130,160,0.55);
+  --buttonWhiteShadow: -.3rem -.3rem .6rem rgba(255,255,255,1);
 
-  --textWhiteShadow: .1rem .1rem .4rem rgba(121,130,160,0.55);
-  --textBlackShadow: -.1rem -.1rem .4rem rgba(255,255,255,1);
+  --textBlackShadow: .1rem .1rem .4rem rgba(121,130,160,0.55);
+  --textWhiteShadow: -.1rem -.1rem .4rem rgba(255,255,255,1);
 
   --svgDropShadow: .1rem .1rem .1rem rgb(121,130,160);
+
+  --dialogShadow:.4rem .4rem .6rem rgba(0,0,0,0.4);
 
   --textColor: #87929d;
   --placeholderColor:#989ea3;

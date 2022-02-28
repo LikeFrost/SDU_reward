@@ -12,6 +12,7 @@
     text-shadow: var(--textBlackShadow),
       var(--textWhiteShadow);
     transition: all .5s ease;
+    user-select: none;
   }
   .button:hover {
     animation: squeeze 0.9s both;

@@ -22,7 +22,7 @@
   user-select: none;
   color: #a6aeb6;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.2rem;
   text-shadow: var(--textBlackShadow),
     var(--textWhiteShadow);
   .menu_circle {
@@ -36,7 +36,7 @@
   }
 }
 .menu_item:hover {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   .menu_circle {
     height: .5rem;
     width: .5rem;
@@ -55,7 +55,7 @@
   user-select: none;
   color: #a6aeb6;
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   text-shadow: var(--textBlackShadow),
     var(--textWhiteShadow);
   .menu_circle {
