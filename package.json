@@ -1,7 +1,7 @@
 {
-  "name": "@alifd/scaffold-lite-js",
+  "name": "SDU 学生奖励管理系统",
   "version": "0.1.0",
-  "description": "轻量级模板，使用 JavaScript，仅包含基础的 Layout。",
+  "description": "designed by Like_Frost",
   "dependencies": {
     "@alifd/next": "^1.19.4",
     "@alifd/theme-design-pro": "0.x",

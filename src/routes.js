@@ -1,9 +1,6 @@
 import BasicLayout from '@/layouts/BasicLayout';
 import UserLayout from './layouts/UserLayout';
 import Login from './pages/Login';
-import Info from './pages/Info';
-import Reward from './pages/Reward';
-import Suggestion from './pages/Suggestion';
 import Home from './pages/Home';
 
 const routerConfig = [

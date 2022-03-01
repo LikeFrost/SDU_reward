@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ConfigProvider, Animate } from '@alifd/next';
+import { ConfigProvider } from '@alifd/next';
 import styles from './index.module.scss';
 import Nav from './components/Nav';
 import Menu from './components/Menu';

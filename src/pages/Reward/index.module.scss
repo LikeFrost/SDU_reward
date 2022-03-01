@@ -1,14 +1,14 @@
-.box{
+.box {
   width: 80vw;
   height: 80vh;
   top: 8rem;
   left: 5vw;
   position: absolute;
 }
-.tab_array{
+.tab_array {
   display: flex;
 }
-.tab{
+.tab {
   font-size: 1.1rem;
   height: 2.8rem;
   width: 6.4rem;
@@ -17,47 +17,47 @@
   justify-content: center;
   align-items: center;
   color: var(--textColor);
-  text-shadow: var(--textBlackShadow),var(--textWhiteShadow);
+  text-shadow: var(--textBlackShadow), var(--textWhiteShadow);
   user-select: none;
   transition: all .5s ease;
 }
-.tab_sel{
+.tab_sel {
   font-size: 1.2rem;
   font-weight: 600;
   width: 6.4rem;
   height: 3.6rem;
-  margin: 0.8rem 0.4rem 0rem 0.4rem;
+  margin: 0.8rem 0.4rem 0 0.4rem;
   display: flex;
   justify-content: center;
   align-items: center;
   color: var(--textColor);
-  text-shadow: var(--textBlackShadow),var(--textWhiteShadow);
+  text-shadow: var(--textBlackShadow), var(--textWhiteShadow);
   user-select: none;
   box-shadow: var(--buttonWhiteShadow);
   background-color: var(--bgGray);
-  border-radius:1rem 1rem 0 0;
+  border-radius: 1rem 1rem 0 0;
   transition: all .5s ease;
 }
-.content{
+.content {
   border-radius: 0.5rem 1.5rem 1.5rem 1.5rem;
-  box-shadow: var(--blackShadow),var(--whiteShadow);
+  box-shadow: var(--blackShadow), var(--whiteShadow);
   width: 80vw;
   height: 70vh;
   padding: 1vw;
 }
-.tip{
+.tip {
   color: var(--textColor);
-  text-shadow: var(--textBlackShadow),var(--textWhiteShadow);
+  text-shadow: var(--textBlackShadow), var(--textWhiteShadow);
 }
-.table{
+.table {
   color: var(--textColor);
-  text-shadow: var(--textBlackShadow),var(--textWhiteShadow);
+  text-shadow: var(--textBlackShadow), var(--textWhiteShadow);
   text-align: center;
   width: 76vw;
 }
-.tr{
+.tr {
   line-height: 3rem;
 }
-.tr th{
+.tr th {
   font-size: 1.2rem;
 }

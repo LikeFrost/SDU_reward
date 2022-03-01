@@ -6,7 +6,7 @@
 body {
   --bgGray: #ebf0f5;
   --bgShadow: #e3e8ee;
-  --mask:rgb(0, 0, 0, 0.4);
+  --mask: rgb(0, 0, 0, 0.4);
   --whiteShadow: -1rem -1rem 2rem rgba(255, 255, 255, 0.5);
   --blackShadow: 1rem 1rem 2rem rgba(214,218,223,0.8);
 
@@ -21,10 +21,10 @@ body {
 
   --svgDropShadow: .1rem .1rem .1rem rgb(121,130,160);
 
-  --dialogShadow:.4rem .4rem .6rem rgba(0,0,0,0.4);
+  --dialogShadow: .4rem .4rem .6rem rgba(0,0,0,0.4);
 
   --textColor: #87929d;
-  --placeholderColor:#989ea3;
+  --placeholderColor: #989ea3;
   
   -webkit-font-smoothing: antialiased;
   background: var(--bgGray);

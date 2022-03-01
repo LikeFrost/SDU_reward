@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shell, ConfigProvider } from '@alifd/next';
+import { ConfigProvider } from '@alifd/next';
 import Dialog from '@/components/Dialog';
 
 (function () {

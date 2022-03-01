@@ -1,79 +1,79 @@
 .box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    user-select: none;
-    transition: all .5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  user-select: none;
+  transition: all .5s ease;
+}
+.circle {
+  height: 50vh;
+  width: 50vh;
+  border-radius: 100%;
+  box-shadow: inset var(--circleBlackShadow),
+    inset var(--circleWhiteShadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .5s ease;
+}
+.pic {
+  height: 30vh;
+  width: 30vh;
+  transition: all .5s ease;
+  filter: drop-shadow(var(--svgDropShadow));
+}
+.ball {
+  height: 72vh;
+  width: 72vh;
+  position: absolute;
+  fill: none;
+  stroke-width: 15;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke: var(--bgShadow);
+  stroke-dasharray: 500 2013;
+  animation: rotate 4s infinite linear; 
+  filter: drop-shadow(var(--buttonBlackShadow));
+  z-index: -100;
+}
+.ball2 {
+  height: 72vh;
+  width: 72vh;
+  position: absolute;
+  fill: none;
+  stroke-width: 15;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke: var(--bgShadow);
+  stroke-dasharray: 500 2013;
+  animation: rotate 4s infinite -1s linear; 
+  filter: drop-shadow(var(--buttonBlackShadow));
+  z-index: -100;
+}
+@keyframes rotate {
+  0% {
+    stroke-dashoffset: 0;
   }
-  .circle {
-    height: 50vh;
-    width: 50vh;
-    border-radius: 100%;
-    box-shadow: inset var(--circleBlackShadow),
-      inset var(--circleWhiteShadow);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all .5s ease;
+  100% {
+    stroke-dashoffset: 5027.247;
   }
-  .pic {
-    height: 30vh;
-    width: 30vh;
-    transition: all .5s ease;
-    filter: drop-shadow(var(--svgDropShadow));
-  }
-  .ball {
-    height: 72vh;
-    width: 72vh;
-    position: absolute;
-    fill: none;
-    stroke-width: 15;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-    stroke: var(--bgShadow);
-    stroke-dasharray: 500 2013;
-    animation: rotate 4s infinite linear; 
-    filter: drop-shadow(var(--buttonBlackShadow));
-    z-index: -100;
-  }
-  .ball2 {
-    height: 72vh;
-    width: 72vh;
-    position: absolute;
-    fill: none;
-    stroke-width: 15;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-    stroke: var(--bgShadow);
-    stroke-dasharray: 500 2013;
-    animation: rotate 4s infinite -1s linear; 
-    filter: drop-shadow(var(--buttonBlackShadow));
-    z-index: -100;
-  }
-  @keyframes rotate {
-    0% {
-      stroke-dashoffset: 0;
-    }
-    100% {
-      stroke-dashoffset: 5027.247;
-    }
-  }
-  .button_reward {
-    position: absolute;
-    top: 30vh;
-    left: calc( 50vw + 15vh );
-    z-index: 100;
-  }
-  .button_info {
-    position: absolute;
-    top: 50vh;
-    left: calc( 50vw - 35vh );
-    z-index: 100;
-  }
-  .button_suggestion {
-    position: absolute;
-    top: 65vh;
-    left: calc( 50vw + 15vh );
-    z-index: 100;
-  }
+}
+.button_reward {
+  position: absolute;
+  top: 30vh;
+  left: calc( 50vw + 15vh );
+  z-index: 100;
+}
+.button_info {
+  position: absolute;
+  top: 50vh;
+  left: calc( 50vw - 35vh );
+  z-index: 100;
+}
+.button_suggestion {
+  position: absolute;
+  top: 65vh;
+  left: calc( 50vw + 15vh );
+  z-index: 100;
+}

@@ -10,14 +10,14 @@
 }
 ::-webkit-scrollbar {
   width: .7rem; 
-  height: 0; 
+  height: 0;
 }
-::-webkit-scrollbar-track{
+::-webkit-scrollbar-track {
   box-shadow: inset var(--buttonBlackShadow),
     inset var(--buttonWhiteShadow);
   border-radius: 3px;
 }
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
   border-radius: .5rem;
   box-shadow: var(--buttonBlackShadow),
     var(--buttonWhiteShadow);
