@@ -9,44 +9,24 @@ function Reward() {
       type: 'reward_total',
     },
     {
-      title: '主题教育',
-      type: 'reward_education',
-    },
-    {
-      title: '文化艺术',
-      type: 'reward_art',
-    },
-    {
-      title: '身心健康',
-      type: 'reward_healthy',
-    },
-    {
-      title: '科技创新',
+      title: '研究创新',
       type: 'reward_technology',
     },
     {
-      title: '社会实践',
+      title: '创业实践',
       type: 'reward_social',
     },
     {
-      title: '志愿服务',
-      type: 'reward_volunteer',
-    },
-    {
-      title: '社会工作',
+      title: '社会服务',
       type: 'reward_work',
     },
     {
-      title: '社团经历',
-      type: 'reward_association',
+      title: '美育素养',
+      type: 'reward_art',
     },
     {
-      title: '就业创业',
-      type: 'reward_job',
-    },
-    {
-      title: '学术活动',
-      type: 'reward_academic',
+      title: '体育素养',
+      type: 'reward_healthy',
     },
   ];
   const [currentType, setCurrentType] = useState('reward_total');
@@ -65,7 +45,7 @@ function Reward() {
         {
           tabConfig.map((item, index) => {
             return (
-              <div className={item.type === currentType ? styles.tab_sel : styles.tab} index={index} onClick={() => { loadData(item.type); }}>{item.title}</div>
+              <div className={item.type === currentType ? styles.tab_sel : styles.tab} key={index} onClick={() => { loadData(item.type); }}>{item.title}</div>
             );
           })
         }
@@ -76,9 +56,36 @@ function Reward() {
       >
         <div className={styles.content}>
           {currentType}
+          <table className={styles.table}>
+            <thead>
+              <tr className={styles.tr}>
+                <th>序号</th>
+                <th>奖项类别</th>
+                <th>赋分项目</th>
+                <th>奖项名称</th>
+                <th>奖项级别</th>
+                <th>奖项等次</th>
+                <th>获奖时间</th>
+                <th>赋分值</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>科技创新</td>
+                <td>学术竞赛</td>
+                <td>数学建模</td>
+                <td>国家级</td>
+                <td>二等奖</td>
+                <td>2020.10.10</td>
+                <td>100</td>
+                <td>查看</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </Loading>
-
     </div>
   );
 }

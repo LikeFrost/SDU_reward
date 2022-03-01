@@ -16,9 +16,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  // background-color: var(--bgShadow);
-  // border-radius: 0.5rem;
-  // box-shadow: inset var(--buttonBlackShadow),inset var(--buttonWhiteShadow);
   color: var(--textColor);
   text-shadow: var(--textBlackShadow),var(--textWhiteShadow);
   user-select: none;
@@ -42,12 +39,25 @@
   transition: all .5s ease;
 }
 .content{
-  border-radius: 1.5rem;
+  border-radius: 0.5rem 1.5rem 1.5rem 1.5rem;
   box-shadow: var(--blackShadow),var(--whiteShadow);
   width: 80vw;
   height: 70vh;
+  padding: 1vw;
 }
 .tip{
   color: var(--textColor);
   text-shadow: var(--textBlackShadow),var(--textWhiteShadow);
+}
+.table{
+  color: var(--textColor);
+  text-shadow: var(--textBlackShadow),var(--textWhiteShadow);
+  text-align: center;
+  width: 76vw;
+}
+.tr{
+  line-height: 3rem;
+}
+.tr th{
+  font-size: 1.2rem;
 }
