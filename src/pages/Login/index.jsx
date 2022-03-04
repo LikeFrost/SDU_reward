@@ -7,23 +7,15 @@ import store from '@/store';
 
 function Login() {
   const history = useHistory();
-  const [dataDialog, dispatchers_dialog] = store.useModel('dialog');
-  const { dialogConfig } = dataDialog;
+  const [, dispatchers_dialog] = store.useModel('dialog');
   const { setDialog } = dispatchers_dialog;
+  const [, dispatchers_user] = store.useModel('user');
   const login = () => {
     const SDU_number = document.getElementById('SDU_number').value;
     const password = document.getElementById('password').value;
-    const reg = /^[0-9]+.?[0-9]*$/;
+    const regId = /^\d{9}$|^\d{12}$/;
     let temp;
-    if (SDU_number === '' || !password) {
-      temp = {
-        showDialog: true,
-        title: '登录失败！',
-        text: '学号或密码不能为空，请核对后提交',
-        state: 'failure',
-        showButton: true,
-      };
-    } else if (!reg.test(SDU_number) || (SDU_number.length !== 12 && SDU_number.length !== 9)) {
+    if (!regId.test(SDU_number)) {
       temp = {
         showDialog: true,
         title: '格式错误！',
@@ -31,40 +23,37 @@ function Login() {
         state: 'failure',
         showButton: true,
       };
-    } else if (password.length < 6) {
-      temp = {
-        showDialog: true,
-        title: '格式错误！',
-        text: '密码不得小于6位，请核对后提交',
-        state: 'failure',
-        showButton: true,
-      };
-    } else if (password.length > 20) {
-      temp = {
-        showDialog: true,
-        title: '格式错误！',
-        text: '密码不得大于20位，请核对后提交',
-        state: 'failure',
-        showButton: true,
-      };
+      setDialog(temp);
     } else {
-      // denglu
-      temp = {
-        showDialog: true,
-        title: '登录成功！',
-        text: '登陆成功，2s后进入主页',
-        state: 'success',
-        showButton: false,
-      };
-      setTimeout(() => {
-        temp = {
-          showDialog: false,
-        };
-        setDialog(temp);
-        history.push('home');
-      }, 2000);
+      dispatchers_user.login({ SDU_number, password }).then((res) => {
+        if (res === 100) {
+          temp = {
+            showDialog: true,
+            title: '登录成功！',
+            text: '登陆成功，2s后进入主页',
+            state: 'success',
+            showButton: false,
+          };
+          setDialog(temp);
+          setTimeout(() => {
+            temp = {
+              showDialog: false,
+            };
+            setDialog(temp);
+            history.push('home');
+          }, 2000);
+        } else {
+          temp = {
+            showDialog: true,
+            title: '密码错误！',
+            text: '密码错误，请核对后重试',
+            state: 'failure',
+            showButton: true,
+          };
+          setDialog(temp);
+        }
+      });
     }
-    setDialog(temp);
   };
   return (
     <div className={styles.container}>

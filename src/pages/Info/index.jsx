@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './index.module.scss';
 import store from '@/store';
 import Button from '@/components/Button';
@@ -16,6 +16,8 @@ function Info() {
   const [dataDialog, dispatchers_dialog] = store.useModel('dialog');
   const { dialogConfig } = dataDialog;
   const { setDialog } = dispatchers_dialog;
+  const [dataUser, dispatchers_user] = store.useModel('user');
+  const [showInput, setShowInput] = useState(false);
   const changeCurrent = (index) => {
     // eslint-disable-next-line prefer-const
     let temp = JSON.parse(JSON.stringify(menuConfig));
@@ -31,60 +33,63 @@ function Info() {
     } else setShow(false);
     setMenu(temp);
   };
-  const changePassword = () => {
-    const new_password = document.getElementById('new_password');
-    const repeat_password = document.getElementById('repeat_password');
+  const changeInfo = () => {
+    const new_password = document.getElementById('new_password').value;
+    const repeat_password = document.getElementById('repeat_password').value;
+    const name = document.getElementById('name').value;
+    const telephone = document.getElementById('telephone').value;
+    // eslint-disable-next-line @iceworks/best-practices/no-secret-info
+    const regPassword = /^[a-zA-z0-9.!@$%^&*?]{6,20}$/;
+    const regTelephone = /^1\d{10}$/;
+    const regName = /^[\u4e00-\u9fa5]{2,5}$/;
     let temp;
-    if (!new_password.value || !repeat_password.value) {
+    if (name && !regName.test(name)) {
       temp = {
         showDialog: true,
         title: '修改失败！',
-        text: '密码不能为空，请核对后提交',
+        text: '请输入正确的姓名',
         state: 'failure',
         showButton: true,
       };
-    } else if (new_password.value === repeat_password.value) {
-      if (new_password.value.length < 6) {
-        temp = {
-          showDialog: true,
-          title: '修改失败！',
-          text: '密码长度不得小于6位，请核对后提交',
-          state: 'failure',
-          showButton: true,
-        };
-      } else if (new_password.value.length > 20) {
-        temp = {
-          showDialog: true,
-          title: '修改失败！',
-          text: '密码长度不得大于20位，请核对后提交',
-          state: 'failure',
-          showButton: true,
-        };
-      } else {
-        temp = {
-          showDialog: true,
-          title: '修改成功！',
-          text: '密码修改成功，2s后返回主页',
-          state: 'success',
-          showButton: false,
-        };
-        // 写密码修改
-        setTimeout(() => {
-          changeCurrent(0);
-          temp = {
-            showDialog: false,
-          };
-          setDialog(temp);
-        }, 2000);
-      }
+    } else if (telephone && !regTelephone.test(telephone)) {
+      temp = {
+        showDialog: true,
+        title: '修改失败！',
+        text: '请输入正确的手机号',
+        state: 'failure',
+        showButton: true,
+      };
+    } else if (new_password && !regPassword.test(new_password)) {
+      temp = {
+        showDialog: true,
+        title: '修改失败！',
+        text: '密码须为6-20位，仅可包含数字、大小写字母以及.!@$%^&*?',
+        state: 'failure',
+        showButton: true,
+      };
+    } else if (new_password != repeat_password) {
+      temp = {
+        showDialog: true,
+        title: '修改失败！',
+        text: '两次密码不相同，请核对后提交',
+        state: 'failure',
+        showButton: true,
+      };
     } else {
       temp = {
         showDialog: true,
-        title: '修改失败！',
-        text: '两次密码不一致，请核对后提交',
-        state: 'failure',
-        showButton: true,
+        title: '修改成功！',
+        text: '修改成功，2s后返回主页',
+        state: 'success',
+        showButton: false,
       };
+      setTimeout(() => {
+        changeCurrent(0);
+        temp = {
+          showDialog: false,
+        };
+        setDialog(temp);
+      }, 2000);
     }
     setDialog(temp);
   };
@@ -99,32 +104,34 @@ function Info() {
           <div className={styles.detail_table}>
             <div className={styles.detail}>
               <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名</div>
-              <div className={styles.content}>zlh</div>
+              <div className={styles.content}>{showInput ? <Input type="text" placeholder={dataUser.name} id="name" /> : dataUser.name}</div>
             </div>
             <div className={styles.detail}>
               <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号</div>
-              <div className={styles.content}>201800000000</div>
+              <div className={styles.content}>{dataUser.id}</div>
             </div>
             <div className={styles.detail}>
               <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年级</div>
-              <div className={styles.content}>2018</div>
+              <div className={styles.content}>{dataUser.id.slice(0, 4)}</div>
             </div>
             <div className={styles.detail}>
               <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;手机号</div>
-              <div className={styles.content}>10000000000</div>
+              <div className={styles.content}>{showInput ? <Input type="text" placeholder={dataUser.telephone} id="telephone" /> : dataUser.telephone}</div>
             </div>
+            {showInput &&
             <div className={styles.detail}>
               <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;新密码</div>
               <div className={styles.content}><Input type="password" placeholder="请输入新密码" id="new_password" /></div>
-            </div>
+            </div>}
+            {showInput &&
             <div className={styles.detail}>
               <div className={styles.tab}>确认密码</div>
               <div className={styles.content}><Input type="password" placeholder="确认新密码" id="repeat_password" /></div>
-            </div>
+            </div>}
           </div>
           <div className={styles.button_array}>
             <Button myClassName={styles.button_half} myClick={() => changeCurrent(0)} content="返回主页" />
-            <Button myClassName={styles.button_half} myClick={changePassword} content="确认修改" />
+            <Button myClassName={styles.button_half} myClick={showInput ? changeInfo : () => setShowInput(true)} content={showInput ? '确认修改' : '修改信息'} />
           </div>
         </div>
       </div>
