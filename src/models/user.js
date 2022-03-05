@@ -2,11 +2,11 @@ import userService from '@/services/user';
 
 export default {
   state: {
-    id: '',
-    password: '',
-    name: '请完善姓名信息',
-    grade: '',
-    telephone: '请完善联系方式',
+    Id: '',
+    Password: '',
+    Username: '',
+    Grade: '',
+    Telephone: '',
     code: 101,
   },
   reducers: {
@@ -19,6 +19,15 @@ export default {
       const data = await userService.login(props);
       dispatch.user.update(data);
       return data.code;
+    },
+    async updateUser(props) {
+      const data = await userService.updateUser(props);
+      dispatch.user.update(data);
+      return data.code;
+    },
+    async getUser(id) {
+      const data = await userService.getUser(id);
+      dispatch.user.update(data.user);
     },
   }),
 };

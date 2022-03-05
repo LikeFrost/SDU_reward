@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import store from '@/store';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 
 function Info() {
+  useEffect(() => {
+    dispatchers_user.getUser(dataUser.id);
+  }, []);
   const [dataShow, dispatchers_show] = store.useModel('show');
   const { show } = dataShow;
   const { setShow } = dispatchers_show;
@@ -76,6 +79,11 @@ function Info() {
         showButton: true,
       };
     } else {
+      const { id } = dataUser;
+      const password = new_password;
+      dispatchers_user.updateUser({ id, password, name, telephone }).then((res) => {
+        console.log(res);
+      });
       temp = {
         showDialog: true,
         title: '修改成功！',
@@ -104,7 +112,7 @@ function Info() {
           <div className={styles.detail_table}>
             <div className={styles.detail}>
               <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名</div>
-              <div className={styles.content}>{showInput ? <Input type="text" placeholder={dataUser.name} id="name" /> : dataUser.name}</div>
+              <div className={styles.content}>{showInput ? <Input type="text" placeholder="请完善姓名信息" id="name" /> : dataUser.Username || '请完善姓名信息'}</div>
             </div>
             <div className={styles.detail}>
               <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号</div>
@@ -116,7 +124,7 @@ function Info() {
             </div>
             <div className={styles.detail}>
               <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;手机号</div>
-              <div className={styles.content}>{showInput ? <Input type="text" placeholder={dataUser.telephone} id="telephone" /> : dataUser.telephone}</div>
+              <div className={styles.content}>{showInput ? <Input type="text" placeholder="请完善联系方式" id="telephone" /> : dataUser.Telephone || '请完善联系方式'}</div>
             </div>
             {showInput &&
             <div className={styles.detail}>
