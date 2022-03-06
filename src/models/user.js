@@ -18,6 +18,7 @@ export default {
     async login(props) {
       const data = await userService.login(props);
       dispatch.user.update(data);
+      sessionStorage.setItem('token', data.token);
       return data.code;
     },
     async updateUser(props) {
@@ -25,9 +26,10 @@ export default {
       dispatch.user.update(data);
       return data.code;
     },
-    async getUser(id) {
-      const data = await userService.getUser(id);
+    async getUser() {
+      const data = await userService.getUser();
       dispatch.user.update(data.user);
+      return data.code;
     },
   }),
 };

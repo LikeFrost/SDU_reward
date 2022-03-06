@@ -1,12 +1,32 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'ice';
 import styles from './index.module.scss';
 import store from '@/store';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 
 function Info() {
+  const history = useHistory();
   useEffect(() => {
-    dispatchers_user.getUser(dataUser.id);
+    dispatchers_user.getUser().then((res) => {
+      if (res === 102) {
+        let temp = {
+          showDialog: true,
+          title: '登录过期！',
+          text: '登录过期，请重新登录!',
+          state: 'failure',
+          showButton: false,
+        };
+        setDialog(temp);
+        setTimeout(() => {
+          history.push('/');
+          temp = {
+            showDialog: false,
+          };
+          setDialog(temp);
+        }, 1000);
+      }
+    });
   }, []);
   const [dataShow, dispatchers_show] = store.useModel('show');
   const { show } = dataShow;
@@ -79,9 +99,8 @@ function Info() {
         showButton: true,
       };
     } else {
-      const { id } = dataUser;
       const password = new_password;
-      dispatchers_user.updateUser({ id, password, name, telephone }).then((res) => {
+      dispatchers_user.updateUser({ password, name, telephone }).then((res) => {
         console.log(res);
       });
       temp = {
@@ -116,11 +135,11 @@ function Info() {
             </div>
             <div className={styles.detail}>
               <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号</div>
-              <div className={styles.content}>{dataUser.id}</div>
+              <div className={styles.content}>{dataUser.Id}</div>
             </div>
             <div className={styles.detail}>
               <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年级</div>
-              <div className={styles.content}>{dataUser.id.slice(0, 4)}</div>
+              <div className={styles.content}>{dataUser.Id.slice(0, 4)}</div>
             </div>
             <div className={styles.detail}>
               <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;手机号</div>

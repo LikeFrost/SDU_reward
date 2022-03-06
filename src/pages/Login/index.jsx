@@ -11,11 +11,11 @@ function Login() {
   const { setDialog } = dispatchers_dialog;
   const [, dispatchers_user] = store.useModel('user');
   const login = () => {
-    const SDU_number = document.getElementById('SDU_number').value;
+    const id = document.getElementById('id').value;
     const password = document.getElementById('password').value;
     const regId = /^\d{9}$|^\d{12}$/;
     let temp;
-    if (!regId.test(SDU_number)) {
+    if (!regId.test(id)) {
       temp = {
         showDialog: true,
         title: '格式错误！',
@@ -25,7 +25,7 @@ function Login() {
       };
       setDialog(temp);
     } else {
-      dispatchers_user.login({ SDU_number, password }).then((res) => {
+      dispatchers_user.login({ id, password }).then((res) => {
         if (res === 100) {
           temp = {
             showDialog: true,
@@ -62,7 +62,7 @@ function Login() {
           <img className={styles.svg} src="../../../img/icon-login.svg" />
           <div className={styles.detail}>
             <div className={styles.tab}>学号</div>
-            <div className={styles.content}><Input type="text" placeholder="请输入学号" id="SDU_number" style={styles.input} /></div>
+            <div className={styles.content}><Input type="text" placeholder="请输入学号" id="id" style={styles.input} /></div>
           </div>
           <div className={styles.detail}>
             <div className={styles.tab}>密码</div>

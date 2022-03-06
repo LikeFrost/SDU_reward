@@ -2,12 +2,26 @@ import { request } from 'ice';
 
 export default {
   async login(props) {
-    return await request.post(`/user/login?id=${props.SDU_number}&&password=${props.password}`);
+    return await request.post(
+      '/user/login',
+      { id: props.id, password: props.password },
+    );
   },
   async updateUser(props) {
-    return await request.post(`/user/updateuser/${props.id}?password=${props.password}&&name=${props.name}&&telephone=${props.telephone}`);
+    return await request.post(
+      '/user/updateuser',
+      { name: props.name, password: props.password, telephone: props.telephone },
+      { headers: {
+        Authorization: sessionStorage.getItem('token'),
+      } },
+    );
   },
-  async getUser(id) {
-    return await request.get(`/user/${id}`);
+  async getUser() {
+    return await request.get(
+      '/user/info',
+      { headers: {
+        Authorization: sessionStorage.getItem('token'),
+      } },
+    );
   },
 };
