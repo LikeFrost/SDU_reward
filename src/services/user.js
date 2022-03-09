@@ -9,7 +9,7 @@ export default {
   },
   async updateUser(props) {
     return await request.post(
-      '/user/updateuser',
+      '/user',
       { name: props.name, password: props.password, telephone: props.telephone },
       { headers: {
         Authorization: sessionStorage.getItem('token'),
@@ -18,7 +18,7 @@ export default {
   },
   async getUser() {
     return await request.get(
-      '/user/info',
+      '/user',
       { headers: {
         Authorization: sessionStorage.getItem('token'),
       } },
