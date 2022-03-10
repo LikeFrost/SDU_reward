@@ -7,14 +7,14 @@
     width: 60vh;
     box-shadow: var(--blackShadow),var(--whiteShadow);
     border-radius: 0 3rem 3rem 3rem;
-    transition: all 0.4s ease-in;
+    transition: transform 0.4s ease-in;
     transform:  rotate(-90deg);
     margin:auto;
     position: relative;
 }
 .card:hover{
-    height: 60vh;
-    width: 80vh;
+    // height: 60vh;
+    // width: 80vh;
     border-radius: 3rem;
     transform:  rotate(0deg);
     .img{
@@ -24,10 +24,10 @@
         display: none;
     }
     .input{
-        opacity: 1;
+        display: block;
     }
     .button{
-        opacity: 1;
+        display: block;
     }
 }
 .img{
@@ -57,8 +57,8 @@
     margin: 5rem 1rem;
 }
 .input {
-  opacity: 0;
+    display: none;
 }
 .button{
-    opacity: 0;
+    display: none;
 }
