@@ -4,6 +4,7 @@ import now from './models/now';
 import menu from './models/menu';
 import dialog from './models/dialog';
 import user from './models/user';
+import reward from './models/reward';
 
 const store = createStore({
   show,
@@ -11,6 +12,7 @@ const store = createStore({
   menu,
   dialog,
   user,
+  reward,
 });
 
 export default store;

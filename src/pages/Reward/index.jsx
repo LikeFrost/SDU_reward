@@ -1,42 +1,63 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import { Loading } from '@alifd/next';
+import store from '@/store';
 
 function Reward() {
   const tabConfig = [
     {
-      title: '奖励总览',
+      tag: '奖励总览',
       type: 'reward_total',
     },
     {
-      title: '研究创新',
+      tag: '研究创新',
       type: 'reward_technology',
     },
     {
-      title: '创业实践',
+      tag: '创业实践',
       type: 'reward_social',
     },
     {
-      title: '社会服务',
+      tag: '社会服务',
       type: 'reward_work',
     },
     {
-      title: '美育素养',
+      tag: '美育素养',
       type: 'reward_art',
     },
     {
-      title: '体育素养',
+      tag: '体育素养',
       type: 'reward_healthy',
     },
   ];
   const [currentType, setCurrentType] = useState('reward_total');
   const [loading, setLoading] = useState(false);
-  const loadData = (type) => {
+  const [dataReward, dispatchers_reward] = store.useModel('reward');
+  const { reward } = dataReward;
+  useEffect(() => {
+    setLoading(true);
+    dispatchers_reward.getAllReward().then(() => {
+      setTimeout(() => {
+        setLoading(false);
+      });
+    }, 1000);
+  }, []);
+  const loadData = (type, tag) => {
     setCurrentType(type);
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    if (tag === '奖励总览') {
+      dispatchers_reward.getAllReward().then(() => {
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+      });
+    } else {
+      dispatchers_reward.getRewardByTag(tag).then(() => {
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+      });
+    }
   };
   return (
     <div className={styles.box}>
@@ -45,7 +66,7 @@ function Reward() {
         {
           tabConfig.map((item, index) => {
             return (
-              <div className={item.type === currentType ? styles.tab_sel : styles.tab} key={index} onClick={() => { loadData(item.type); }}>{item.title}</div>
+              <div className={item.type === currentType ? styles.tab_sel : styles.tab} key={index} onClick={() => { loadData(item.type, item.tag); }}>{item.tag}</div>
             );
           })
         }
@@ -59,7 +80,6 @@ function Reward() {
           <table className={styles.table}>
             <thead>
               <tr className={styles.tr}>
-                <th>序号</th>
                 <th>奖项类别</th>
                 <th>赋分项目</th>
                 <th>奖项名称</th>
@@ -71,17 +91,20 @@ function Reward() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>科技创新</td>
-                <td>学术竞赛</td>
-                <td>数学建模</td>
-                <td>国家级</td>
-                <td>二等奖</td>
-                <td>2020.10.10</td>
-                <td>100</td>
-                <td>查看</td>
-              </tr>
+              {reward.map((item) => {
+                return (
+                  <tr key={item.Id}>
+                    <td>{item.Tag}</td>
+                    <td>{item.Type}</td>
+                    <td>{item.Name}</td>
+                    <td>{item.Grade}</td>
+                    <td>{item.Prize}</td>
+                    <td>2020.10.10</td>
+                    <td>{item.Score}</td>
+                    <td>查看</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
