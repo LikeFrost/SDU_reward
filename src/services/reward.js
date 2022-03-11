@@ -4,7 +4,7 @@ export default {
   async addReward(props) {
     return await request.post(
       '/reward',
-      { tag: props.tag, type: props.type, name: props.name, grade: props.grade, prize: props.prize, score: props.score },
+      { tag: props.tag, type: props.type, name: props.name, grade: props.grade, prize: props.prize, score: props.score, time: props.time },
       { headers: {
         Authorization: sessionStorage.getItem('token'),
       } },
@@ -39,7 +39,7 @@ export default {
   async updateReward(props) {
     return await request.post(
         `/reward/${props.rewardId}`,
-        { tag: props.tag, type: props.type, name: props.name, grade: props.grade, prize: props.prize, score: props.score },
+        { tag: props.tag, type: props.type, name: props.name, grade: props.grade, prize: props.prize, score: props.score, time: props.time },
         { headers: {
           Authorization: sessionStorage.getItem('token'),
         } },

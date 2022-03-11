@@ -22,9 +22,9 @@ function Home() {
         setNow(temp[i].component);
       } else temp[i].sel = false;
     }
-    if (index === 0 || index === 2) {
-      setShow(true);
-    } else setShow(false);
+    if (index === 1) {
+      setShow(false);
+    } else setShow(true);
     setMenu(temp);
   };
   return (

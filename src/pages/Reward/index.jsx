@@ -4,6 +4,7 @@ import { Loading } from '@alifd/next';
 import store from '@/store';
 
 function Reward() {
+  const [switchTag, setTag] = useState('添加记录');
   const tabConfig = [
     {
       tag: '奖励总览',
@@ -28,6 +29,10 @@ function Reward() {
     {
       tag: '体育素养',
       type: 'reward_healthy',
+    },
+    {
+      tag: switchTag,
+      type: switchTag,
     },
   ];
   const [currentType, setCurrentType] = useState('reward_total');
@@ -76,37 +81,38 @@ function Reward() {
         visible={loading}
       >
         <div className={styles.content}>
-          {currentType}
-          <table className={styles.table}>
-            <thead>
-              <tr className={styles.tr}>
-                <th>奖项类别</th>
-                <th>赋分项目</th>
-                <th>奖项名称</th>
-                <th>奖项级别</th>
-                <th>奖项等次</th>
-                <th>获奖时间</th>
-                <th>赋分值</th>
-                <th>操作</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reward.map((item) => {
-                return (
-                  <tr key={item.Id}>
-                    <td>{item.Tag}</td>
-                    <td>{item.Type}</td>
-                    <td>{item.Name}</td>
-                    <td>{item.Grade}</td>
-                    <td>{item.Prize}</td>
-                    <td>2020.10.10</td>
-                    <td>{item.Score}</td>
-                    <td>查看</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          {switchTag !== currentType &&
+            <table className={styles.table}>
+              <thead>
+                <tr className={styles.tr}>
+                  <th>奖项类别</th>
+                  <th>赋分项目</th>
+                  <th>奖项名称</th>
+                  <th>奖项级别</th>
+                  <th>奖项等次</th>
+                  <th>获奖时间</th>
+                  <th>赋分值</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {reward.map((item) => {
+                  return (
+                    <tr key={item.Id}>
+                      <td>{item.Tag}</td>
+                      <td>{item.Type}</td>
+                      <td>{item.Name}</td>
+                      <td>{item.Grade}</td>
+                      <td>{item.Prize}</td>
+                      <td>{item.Time}</td>
+                      <td>{item.Score}</td>
+                      <td>查看</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          }
         </div>
       </Loading>
     </div>
