@@ -3,14 +3,73 @@ import styles from './index.module.scss';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import MultiInput from '@/components/MultiInput';
+import { request, useHistory } from 'ice';
+import store from '@/store';
 
 function Suggestion() {
   const [rotate, setRotate] = useState(false);
+  const [, dispatchers_dialog] = store.useModel('dialog');
+  const { setDialog } = dispatchers_dialog;
+  const history = useHistory();
+  async function AddSuggestion(props) {
+    return await request.post(
+      '/suggestion',
+      { suggestion: props.suggestion, email: props.email },
+      {
+        headers: {
+          Authorization: sessionStorage.getItem('token'),
+        },
+      },
+    );
+  }
   const submitSuggestion = () => {
     const email = document.getElementById('email').value;
     const suggestion = document.getElementById('suggestion').value;
-    console.log(email, suggestion);
-    setRotate(false);
+    AddSuggestion({ email, suggestion }).then((res) => {
+      let temp;
+      if (res.code === 100) {
+        temp = {
+          showDialog: true,
+          title: '反馈成功！',
+          text: '反馈成功，1s后返回',
+          state: 'success',
+          showButton: false,
+        };
+        setTimeout(() => {
+          temp = {
+            showDialog: false,
+          };
+          setDialog(temp);
+          setRotate(false);
+          document.getElementById('email').value = '';
+          document.getElementById('suggestion').value = '';
+        }, 1000);
+      } else if (res.code === 102) {
+        temp = {
+          showDialog: true,
+          title: '登录过期！',
+          text: '登录过期，请重新登录!',
+          state: 'failure',
+          showButton: false,
+        };
+        setTimeout(() => {
+          history.push('/');
+          temp = {
+            showDialog: false,
+          };
+          setDialog(temp);
+        }, 1000);
+      } else {
+        temp = {
+          showDialog: true,
+          title: '反馈失败！',
+          text: '反馈失败，请稍后再试!',
+          state: 'failure',
+          showButton: true,
+        };
+      }
+      setDialog(temp);
+    });
   };
   const clickCard = () => {
     if (!rotate) {
