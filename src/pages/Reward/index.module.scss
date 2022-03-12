@@ -54,10 +54,15 @@
   text-shadow: var(--textBlackShadow), var(--textWhiteShadow);
   text-align: center;
   width: 76vw;
+  user-select: none;
 }
 .tr {
   line-height: 3rem;
 }
 .tr th {
   font-size: 1.2rem;
+}
+.item{
+  font-size: 1.1rem;
+  line-height: 2rem;
 }
