@@ -1,7 +1,10 @@
+/* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import { Loading } from '@alifd/next';
 import store from '@/store';
+import Input from '@/components/Input';
+import Button from '@/components/Button';
 
 function Reward() {
   const [switchTag, setTag] = useState('添加奖励');
@@ -36,159 +39,169 @@ function Reward() {
       id: 'change_tag',
     },
   ];
-  const optionConfig = [
-    {
-      title: '请选择奖励所属类别',
-      options: ['未选择', '研究创新', '创业实践', '社会服务', '美育素养', '体育素养'],
-    },
-    {
-      title: '请选择赋分项目',
-      options: [
+  const initialOption = [
+    ['未选择', '研究创新', '创业实践', '社会服务', '美育素养', '体育素养'],
+    [
+      ['未选择'],
+      ['未选择', '学术竞赛', '科研及学术立项', '学术论文', '著作', '发明创造'],
+      ['未选择', '创业竞赛', '创业实践', '社会实践'],
+      ['未选择', '社会工作', '志愿服务'],
+      ['未选择', '美育表彰', '美育参与'],
+      ['未选择', '体育表彰', '体育参与'],
+    ],
+    [
+      [['未选择']],
+      [
         ['未选择'],
-        ['学术竞赛', '科研及学术立项', '学术论文', '著作', '发明创造'],
-        ['创业竞赛', '创业实践', '社会实践'],
-        ['社会工作', '志愿服务'],
-        ['美育表彰', '美育参与'],
-        ['体育表彰', '体育参与'],
+        ['未选择', '国家级竞赛', '省级竞赛', '校级竞赛', '校区/书院/学院级竞赛'],
+        ['未选择', '国家级立项', '省级立项', '校级立项'],
+        ['未选择', '特类期刊', '核心A', '核心B', 'SCI', 'EI(不含会议录取文章)', 'CSSCI', 'CSSCI扩展版'],
+        ['未选择', '主要作者出版专著'],
+        ['未选择', '国家发明专利(公开)'],
       ],
-    },
-    {
-      title: '请输入奖项名称',
-      options: '',
-    },
-    {
-      title: '请选择奖项级别',
-      options: [
+      [
+        ['未选择'],
+        ['未选择', '国家级竞赛', '省级竞赛', '校级竞赛'],
+        ['未选择', '创业实践'],
+        ['未选择', '社会实践优秀个人', '实践活动团队-队长', '实践活动团队-队员', '国家级实践调查报告', '省级实践调查报告', '校级调查报告'],
+      ],
+      [
+        ['未选择'],
+        ['未选择', '优秀团干部', '最美团支书', '优秀共青团员', '军训优秀学员', '五四评比优秀个人', '自强之星', '榜样的力量年度人物', '优秀学生干部', '优秀班长', '优秀学生', '三号学生', '十佳班长', '十佳团员',
+          '先进班集体-班长/团支书', '先进班集体-班委支委', '优良学风班-班长/团支书', '优良学风班-班委支委', '先进团支部-团支书', '先进团支部-宣传/组织委员', '十佳团支部-团支书', '十佳团支部-宣传/组织委员', '学生组织', '社团负责人'],
+        ['未选择', '志愿服务先进个人', '十佳志愿者', '志愿服务先进集体第一负责人', '志愿服务先进集体副部长/干事', '坚持志愿服务并有典型事迹'],
+      ],
+      [
+        ['未选择'],
+        ['未选择', '国家级赛事', '省级赛事', '校级赛事', '校区级赛事', '书院级/院级/社团级'],
+        ['未选择', '校级及以上且未获奖', '其他级别且未获奖', '撰写新闻稿件'],
+      ],
+      [
+        ['未选择'],
+        ['未选择', '国家级', '省级', '校级', '校区级', '书院/院级'],
+        ['未选择', '校级及以上未获奖', '其他级别未获奖'],
+      ],
+    ],
+    [
+      [[['未选择']]],
+      [
         [['未选择']],
         [
-          ['国家级竞赛', '省级竞赛', '校级竞赛', '校区/书院/学院级竞赛'],
-          ['国家级立项', '省级立项', '校级立项'],
-          ['特类期刊', '核心A', '核心B', 'SCI', 'EI(不含会议录取文章)', 'CSSCI', 'CSSCI扩展版'],
-          ['主要作者出版专著'],
-          ['国家发明专利(公开)'],
+          ['未选择'],
+          ['未选择', '特等奖', '一等奖', '二等奖', '三等奖', '优秀奖'],
+          ['未选择', '特等奖', '一等奖', '二等奖', '三等奖', '优秀奖'],
+          ['未选择', '特等奖', '一等奖', '二等奖', '三等奖', '优秀奖'],
+          ['未选择', '特等奖', '一等奖', '二等奖', '三等奖', '优秀奖'],
         ],
         [
-          ['国家级竞赛', '省级竞赛', '校级竞赛'],
-          ['创业实践'],
-          ['社会实践优秀个人', '实践活动团队-队长', '实践活动团队-队员', '国家级实践调查报告', '省级实践调查报告', '校级调查报告'],
+          ['未选择'],
+          ['未选择', '第一作者', '第二作者', '第三作者', '第四作者', '第五作者'],
+          ['未选择', '第一作者', '第二作者', '第三作者', '第四作者', '第五作者'],
+          ['未选择', '第一作者', '第二作者', '第三作者', '第四作者', '第五作者'],
         ],
         [
-          ['优秀团干部', '最美团支书', '优秀共青团员', '军训优秀学员', '五四评比优秀个人', '自强之星', '榜样的力量年度人物', '优秀学生干部', '优秀班长', '优秀学生', '三号学生', '十佳班长', '十佳团员',
-            '先进班集体-班长/团支书', '先进班集体-班委支委', '优良学风班-班长/团支书', '优良学风班-班委支委', '先进团支部-团支书', '先进团支部-宣传/组织委员', '十佳团支部-团支书', '十佳团支部-宣传/组织委员', '学生组织', '社团负责人'],
-          ['志愿服务先进个人', '十佳志愿者', '志愿服务先进集体第一负责人', '志愿服务先进集体副部长/干事', '坚持志愿服务并有典型事迹'],
+          ['未选择'],
+          ['未选择', '第一作者', '第二作者', '第三作者及以后'],
+          ['未选择', '第一作者', '第二作者', '第三作者及以后'],
+          ['未选择', '第一作者', '第二作者', '第三作者及以后'],
+          ['未选择', '第一作者', '第二作者', '第三作者及以后'],
+          ['未选择', '第一作者', '第二作者', '第三作者及以后'],
+          ['未选择', '第一作者', '第二作者', '第三作者及以后'],
+          ['未选择', '第一作者', '第二作者', '第三作者及以后'],
         ],
         [
-          ['国家级赛事', '省级赛事', '校级赛事', '校区级赛事', '书院级/院级/社团级'],
-          ['校级及以上且未获奖', '其他级别且未获奖', '撰写新闻稿件'],
+          ['未选择'],
+          ['未选择', '第一作者', '第二作者', '第三作者及以后'],
         ],
         [
-          ['国家级', '省级', '校级', '校区级', '书院/院级'],
-          ['校级及以上未获奖', '其他级别未获奖'],
+          ['未选择'],
+          ['未选择', '第一作者', '第二作者', '第三作者', '第四作者', '第五作者及以后'],
         ],
       ],
-    },
-    {
-      title: '请选择奖项等次',
-      options: [
-        [[['未选择']]],
+      [
+        [['未选择']],
         [
-          [
-            ['特等奖', '一等奖', '二等奖', '三等奖', '优秀奖'],
-            ['特等奖', '一等奖', '二等奖', '三等奖', '优秀奖'],
-            ['特等奖', '一等奖', '二等奖', '三等奖', '优秀奖'],
-            ['特等奖', '一等奖', '二等奖', '三等奖', '优秀奖'],
-          ],
-          [
-            ['第一作者', '第二作者', '第三作者', '第四作者', '第五作者'],
-            ['第一作者', '第二作者', '第三作者', '第四作者', '第五作者'],
-            ['第一作者', '第二作者', '第三作者', '第四作者', '第五作者'],
-          ],
-          [
-            ['第一作者', '第二作者', '第三作者及以后'],
-            ['第一作者', '第二作者', '第三作者及以后'],
-            ['第一作者', '第二作者', '第三作者及以后'],
-            ['第一作者', '第二作者', '第三作者及以后'],
-            ['第一作者', '第二作者', '第三作者及以后'],
-            ['第一作者', '第二作者', '第三作者及以后'],
-            ['第一作者', '第二作者', '第三作者及以后'],
-          ],
-          [
-            ['第一作者', '第二作者', '第三作者及以后'],
-          ],
-          [
-            ['第一作者', '第二作者', '第三作者', '第四作者', '第五作者及以后'],
-          ],
+          ['未选择'],
+          ['未选择', '特等奖', '一等奖', '二等奖', '三等奖', '优秀奖'],
+          ['未选择', '特等奖', '一等奖', '二等奖', '三等奖', '优秀奖'],
+          ['未选择', '特等奖', '一等奖', '二等奖', '三等奖', '优秀奖'],
         ],
         [
-          [
-            ['特等奖', '一等奖', '二等奖', '三等奖', '优秀奖'],
-            ['特等奖', '一等奖', '二等奖', '三等奖', '优秀奖'],
-            ['特等奖', '一等奖', '二等奖', '三等奖', '优秀奖'],
-          ],
-          [
-            ['创业团队主要负责人', '其他负责人'],
-          ],
-          [
-            ['国家级表彰', '省级表彰', '校级表彰', '院级表彰', '校级立项', '院级立项'],
-            ['国家级表彰', '省级表彰', '校级表彰', '院级表彰', '校级立项', '院级立项'],
-            ['国家级表彰', '省级表彰', '校级表彰', '院级表彰', '校级立项', '院级立项'],
-            ['一等奖', '二等奖', '三等奖'],
-            ['一等奖', '二等奖', '三等奖'],
-            ['一等奖', '二等奖', '三等奖'],
-          ],
+          ['未选择'],
+          ['未选择', '创业团队主要负责人', '其他负责人'],
         ],
         [
-          [
-            ['校级'], ['校级'], ['校级'], ['校级'], ['校级'],
-            ['校级', '校级提名', '院级'],
-            ['校级', '院级'],
-            ['国家级', '省级', '校级', '院级'],
-            ['国家级', '省级', '校级', '院级'],
-            ['国家级', '省级', '校级', '院级'],
-            ['国家级', '省级', '校级', '院级'],
-            ['校级'], ['校级'],
-            ['国家级', '省级', '校级'],
-            ['国家级', '省级', '校级'],
-            ['国家级', '省级', '校级'],
-            ['国家级', '省级', '校级'],
-            ['国家级', '省级', '校级'],
-            ['国家级', '省级', '校级'],
-            ['校级'], ['校级'],
-            ['学生骨干任职', '优秀骨干'],
-            ['五星', '四星', '三星', '二星'],
-            ['国家级', '省级', '校级'],
-            ['国家级', '省级', '校级'],
-            ['国家级', '省级', '校级'],
-            ['国家级', '省级', '校级'],
-            ['优秀', '良好'],
-          ],
-        ],
-        [
-          [
-            ['一等奖', '二等奖', '三等奖', '优秀奖'],
-            ['一等奖', '二等奖', '三等奖', '优秀奖'],
-            ['一等奖', '二等奖', '三等奖', '优秀奖'],
-            ['一等奖', '二等奖', '三等奖', '优秀奖'],
-            ['一等奖', '二等奖', '三等奖', '优秀奖'],
-          ],
-          [['未获奖']],
-          [['未获奖']],
-          [['国家级媒体', '省级媒体', '校级/校区媒体', '其他']],
-        ],
-        [
-          [
-            ['破纪录', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
-            ['破纪录', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
-            ['破纪录', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
-            ['破纪录', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
-            ['破纪录', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
-          ],
-          [['未获奖']],
-          [['未获奖']],
+          ['未选择'],
+          ['未选择', '国家级表彰', '省级表彰', '校级表彰', '院级表彰', '校级立项', '院级立项'],
+          ['未选择', '国家级表彰', '省级表彰', '校级表彰', '院级表彰', '校级立项', '院级立项'],
+          ['未选择', '国家级表彰', '省级表彰', '校级表彰', '院级表彰', '校级立项', '院级立项'],
+          ['未选择', '一等奖', '二等奖', '三等奖'],
+          ['未选择', '一等奖', '二等奖', '三等奖'],
+          ['未选择', '一等奖', '二等奖', '三等奖'],
         ],
       ],
-    },
+      [
+        [['未选择']],
+        [
+          ['未选择'],
+          ['校级'], ['校级'], ['校级'], ['校级'], ['校级'],
+          ['未选择', '校级', '校级提名', '院级'],
+          ['未选择', '校级', '院级'],
+          ['未选择', '国家级', '省级', '校级', '院级'],
+          ['未选择', '国家级', '省级', '校级', '院级'],
+          ['未选择', '国家级', '省级', '校级', '院级'],
+          ['未选择', '国家级', '省级', '校级', '院级'],
+          ['校级'], ['校级'],
+          ['未选择', '国家级', '省级', '校级'],
+          ['未选择', '国家级', '省级', '校级'],
+          ['未选择', '国家级', '省级', '校级'],
+          ['未选择', '国家级', '省级', '校级'],
+          ['未选择', '国家级', '省级', '校级'],
+          ['未选择', '国家级', '省级', '校级'],
+          ['未选择', '校级'], ['校级'],
+          ['未选择', '学生骨干任职', '优秀骨干'],
+          ['未选择', '五星', '四星', '三星', '二星'],
+        ],
+        [
+          ['未选择'],
+          ['未选择', '国家级', '省级', '校级'],
+          ['未选择', '国家级', '省级', '校级'],
+          ['未选择', '国家级', '省级', '校级'],
+          ['未选择', '国家级', '省级', '校级'],
+          ['未选择', '优秀', '良好'],
+        ],
+      ],
+      [
+        [['未选择']],
+        [
+          ['未选择'],
+          ['未选择', '一等奖', '二等奖', '三等奖', '优秀奖'],
+          ['未选择', '一等奖', '二等奖', '三等奖', '优秀奖'],
+          ['未选择', '一等奖', '二等奖', '三等奖', '优秀奖'],
+          ['未选择', '一等奖', '二等奖', '三等奖', '优秀奖'],
+          ['未选择', '一等奖', '二等奖', '三等奖', '优秀奖'],
+        ],
+        [['未选择'], ['未获奖']],
+        [['未选择'], ['未获奖']],
+        [['未选择'], ['未选择', '国家级媒体', '省级媒体', '校级/校区媒体', '其他']],
+      ],
+      [
+        [['未选择']],
+        [
+          ['未选择'],
+          ['未选择', '破纪录', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
+          ['未选择', '破纪录', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
+          ['未选择', '破纪录', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
+          ['未选择', '破纪录', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
+          ['未选择', '破纪录', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
+        ],
+        [['未选择'], ['未获奖']],
+        [['未选择'], ['未获奖']],
+      ],
+    ],
   ];
+  const [option, setOption] = useState([0, 0, 0, 0]);
+  const [currentOption, setCurrentOption] = useState([initialOption[0], initialOption[1][0], initialOption[2][0][0], initialOption[3][0][0][0]]);
   const [currentType, setCurrentType] = useState('reward_total');
   const [loading, setLoading] = useState(false);
   const [dataReward, dispatchers_reward] = store.useModel('reward');
@@ -205,6 +218,8 @@ function Reward() {
     setCurrentType(type);
     setLoading(true);
     setTag('添加奖励');
+    setOption([0, 0, 0, 0]);
+    setCurrentOption([initialOption[0], initialOption[1][option[0]], initialOption[2][option[0]][option[1]], initialOption[3][option[0]][option[1]][option[2]]]);
     if (tag === '奖励总览') {
       dispatchers_reward.getAllReward().then(() => {
         setTimeout(() => {
@@ -224,9 +239,53 @@ function Reward() {
     changeTag.click();
     setTag('奖励详情');
   };
+  const changeSel = (index) => {
+    const select = [
+      parseInt(document.getElementById('select0').value, 10),
+      parseInt(document.getElementById('select1').value, 10),
+      parseInt(document.getElementById('select2').value, 10),
+      parseInt(document.getElementById('select3').value, 10),
+    ];
+    const temp = option;
+    temp[index] = select[index];
+    for (let i = index + 1; i <= 3; i++) {
+      temp[i] = 0;
+    }
+    setOption(temp);
+    setCurrentOption([initialOption[0], initialOption[1][option[0]], initialOption[2][option[0]][option[1]], initialOption[3][option[0]][option[1]][option[2]]]);
+  };
+  const getBase64Image = (img) => {
+    const canvas = document.createElement('canvas');
+    const width = img.naturalWidth || img.width;
+    const height = img.naturalHeight || img.height;
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, width, height);
+    const ext = img.src.substring(img.src.lastIndexOf('.') + 1).toLowerCase();
+    const dataURL = canvas.toDataURL(`image/${ ext}`);
+    return dataURL;
+  };
+  const [img_base64, setImg_base64] = useState();
+  const uploadPic = () => {
+    setImg_base64('');
+    let url;
+    if (navigator.userAgent.indexOf('MSIE') >= 1) { // IE
+      url = document.getElementById('img').value;
+    } else if (navigator.userAgent.indexOf('Firefox') > 0) { // Firefox
+      url = window.URL.createObjectURL(document.getElementById('img').files.item(0));
+    } else if (navigator.userAgent.indexOf('Chrome') > 0) { // Chrome
+      url = window.URL.createObjectURL(document.getElementById('img').files[0]);
+    }
+    const image = new Image();
+    image.src = url;
+    image.onload = () => {
+      setImg_base64(getBase64Image(image));
+      console.log(img_base64);
+    };
+  };
   return (
     <div className={styles.box}>
-
       <div className={styles.tab_array}>
         {
           tabConfig.map((item, index) => {
@@ -273,30 +332,82 @@ function Reward() {
               </tbody>
             </table>
           }
-          {currentType === 'change_tag' &&
-            <div className={styles.details}>
-              {
-                optionConfig.map((item) => {
-                  return (
-                    <div className={styles.detail}>
-                      <div className={styles.detail_tab}>{item.title}</div>
-                      {
-                        item.options &&
-                        <select className={styles.detail_option}>
-                          {
-                          item.options.map((i) => {
-                            return (
-                              <option value={i}>{i}</option>
-                            );
-                          })
-                        }
-                        </select>
-                      }
+          {currentType === 'change_tag' && switchTag === '添加奖励' &&
+          <div className={styles.tag_page}>
+            <div className={styles.details_box}>
+              <div className={styles.details_left}>
+                <div className={styles.detail}>
+                  <div className={styles.detail_tab}>请选择奖项类别:</div>
+                  <select className={styles.detail_option} onChange={() => changeSel(0)} id="select0">
+                    {
+                    currentOption[0].map((item, index) => {
+                      return <option value={index} key={index}>{item}</option>;
+                    })
+                  }
+                  </select>
+                </div>
+                <div className={styles.detail}>
+                  <div className={styles.detail_tab}>请选择赋分项目:</div>
+                  <select className={styles.detail_option} onChange={() => changeSel(1)} id="select1">
+                    {
+                    currentOption[1].map((item, index) => {
+                      return <option value={index} key={index}>{item}</option>;
+                    })
+                  }
+                  </select>
+                </div>
+                <div className={styles.detail}>
+                  <div className={styles.detail_tab}>请选择奖项级别:</div>
+                  <select className={styles.detail_option} onChange={() => changeSel(2)} id="select2">
+                    {
+                    currentOption[2].map((item, index) => {
+                      return <option value={index} key={index}>{item}</option>;
+                    })
+                  }
+                  </select>
+                </div>
+                <div className={styles.detail}>
+                  <div className={styles.detail_tab}>请选择奖项等次:</div>
+                  <select className={styles.detail_option} onChange={() => changeSel(3)} id="select3">
+                    {
+                    currentOption[3].map((item, index) => {
+                      return <option value={index} key={index}>{item}</option>;
+                    })
+                  }
+                  </select>
+                </div>
+                <div className={styles.detail}>
+                  <div className={styles.detail_tab}>请选择获奖时间:</div>
+                  <Input type="date" style={styles.input} />
+                </div>
+                <div className={styles.detail}>
+                  <div className={styles.detail_tab}>请输入奖项名称:</div>
+                  <Input id="name" style={styles.input} />
+                </div>
+              </div>
+              <div className={styles.details_right}>
+                <div className={styles.detail}>
+                  <div className={styles.detail_tab}>请上传奖项证明:</div>
+                  <input type="file" accept="image/jpeg, image/png, image/jpg" id="img" onChange={uploadPic} />
+                </div>
+                <div className={styles.detail}>
+                  {
+                    img_base64 &&
+                    <div className={styles.img_box}>
+                      <img src={img_base64} className={styles.img} alt="预览图片" />
                     </div>
-                  );
-                })
-              }
+                  }
+                  {
+                    !img_base64 &&
+                    <div className={styles.img_box}>
+                      <img src="../../../img/preview.svg" className={styles.img_preview} alt="预览图片" />
+                    </div>
+                  }
+                </div>
+              </div>
             </div>
+            <Button content="确认提交" myClassName={styles.button} />
+          </div>
           }
         </div>
       </Loading>
