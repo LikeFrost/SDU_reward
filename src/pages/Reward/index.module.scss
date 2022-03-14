@@ -39,7 +39,7 @@
   transition: all .5s ease;
 }
 .content {
-  border-radius: 0.5rem 1.5rem 1.5rem 1.5rem;
+  border-radius: 0.5rem;
   box-shadow: var(--blackShadow), var(--whiteShadow);
   width: 80vw;
   height: 70vh;
@@ -47,6 +47,7 @@
   justify-content: center;
   align-items: flex-start;
   padding: 1vw 0;
+  overflow: scroll;
 }
 .tip {
   color: var(--textColor);
@@ -65,6 +66,7 @@
 }
 .tr th {
   font-size: 1.2rem;
+  position: sticky;
 }
 .item{
   font-size: 1.1rem;

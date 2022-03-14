@@ -7,35 +7,15 @@ import Input from '@/components/Input';
 import Button from '@/components/Button';
 
 function Reward() {
-  const [switchTag, setTag] = useState('添加奖励');
   const tabConfig = [
+    { tag: '奖励总览' },
+    { tag: '研究创新' },
+    { tag: '创业实践' },
+    { tag: '社会服务' },
+    { tag: '美育素养' },
+    { tag: '体育素养' },
     {
-      tag: '奖励总览',
-      type: 'reward_total',
-    },
-    {
-      tag: '研究创新',
-      type: 'reward_technology',
-    },
-    {
-      tag: '创业实践',
-      type: 'reward_social',
-    },
-    {
-      tag: '社会服务',
-      type: 'reward_work',
-    },
-    {
-      tag: '美育素养',
-      type: 'reward_art',
-    },
-    {
-      tag: '体育素养',
-      type: 'reward_healthy',
-    },
-    {
-      tag: switchTag,
-      type: 'change_tag',
+      tag: '添加奖励',
       id: 'change_tag',
     },
   ];
@@ -181,9 +161,10 @@ function Reward() {
           ['未选择', '一等奖', '二等奖', '三等奖', '优秀奖'],
           ['未选择', '一等奖', '二等奖', '三等奖', '优秀奖'],
         ],
-        [['未选择'], ['未获奖']],
-        [['未选择'], ['未获奖']],
-        [['未选择'], ['未选择', '国家级媒体', '省级媒体', '校级/校区媒体', '其他']],
+        [
+          ['未选择'], ['未获奖'], ['未获奖'],
+          ['未选择', '国家级媒体', '省级媒体', '校级/校区媒体', '其他'],
+        ],
       ],
       [
         [['未选择']],
@@ -195,17 +176,20 @@ function Reward() {
           ['未选择', '破纪录', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
           ['未选择', '破纪录', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
         ],
-        [['未选择'], ['未获奖']],
-        [['未选择'], ['未获奖']],
+        [
+          ['未选择'], ['未获奖'], ['未获奖'],
+        ],
       ],
     ],
   ];
   const [option, setOption] = useState([0, 0, 0, 0]);
   const [currentOption, setCurrentOption] = useState([initialOption[0], initialOption[1][0], initialOption[2][0][0], initialOption[3][0][0][0]]);
-  const [currentType, setCurrentType] = useState('reward_total');
+  const [currentTag, setCurrentTag] = useState('奖励总览');
   const [loading, setLoading] = useState(false);
   const [dataReward, dispatchers_reward] = store.useModel('reward');
   const { reward } = dataReward;
+  const [, dispatchers_dialog] = store.useModel('dialog');
+  const { setDialog } = dispatchers_dialog;
   useEffect(() => {
     setLoading(true);
     dispatchers_reward.getAllReward().then(() => {
@@ -214,10 +198,9 @@ function Reward() {
       });
     }, 1000);
   }, []);
-  const loadData = (type, tag) => {
-    setCurrentType(type);
+  const loadData = (tag) => {
+    setCurrentTag(tag);
     setLoading(true);
-    setTag('添加奖励');
     setOption([0, 0, 0, 0]);
     setCurrentOption([initialOption[0], initialOption[1][option[0]], initialOption[2][option[0]][option[1]], initialOption[3][option[0]][option[1]][option[2]]]);
     if (tag === '奖励总览') {
@@ -234,10 +217,32 @@ function Reward() {
       });
     }
   };
-  const getDetail = (id) => {
-    const changeTag = document.getElementById('change_tag');
-    changeTag.click();
-    setTag('奖励详情');
+  const deleteReward = (id) => {
+    dispatchers_reward.deleteReward(id).then((res) => {
+      let temp;
+      if (res.code === 100) {
+        loadData(currentTag);
+        temp = {
+          showDialog: true,
+          title: '删除成功！',
+          state: 'success',
+          showButton: false,
+        };
+        setTimeout(() => {
+          temp = { showDialog: false };
+          setDialog(temp);
+        }, 500);
+      } else {
+        temp = {
+          showDialog: true,
+          title: '删除失败！',
+          text: '删除失败，请稍后再试',
+          state: 'failure',
+          showButton: true,
+        };
+      }
+      setDialog(temp);
+    });
   };
   const changeSel = (index) => {
     const select = [
@@ -281,8 +286,55 @@ function Reward() {
     image.src = url;
     image.onload = () => {
       setImg_base64(getBase64Image(image));
-      console.log(img_base64);
+      // console.log(img_base64.length);
     };
+  };
+  const addReward = () => {
+    const name = document.getElementById('name').value;
+    const time = document.getElementById('time').value;
+    const tag = currentOption[0][option[0]];
+    const type = currentOption[1][option[1]];
+    const grade = currentOption[2][option[2]];
+    const prize = currentOption[3][option[3]];
+    const score = '0';
+    // const img = img_base64;
+    const img = 'img';
+    let temp;
+    if (!name || !time || !tag || !type || !grade) {
+      temp = {
+        showDialog: true,
+        title: '信息不完整！',
+        text: '请检查各项信息是否完整后重试!',
+        state: 'failure',
+        showButton: true,
+      };
+      setDialog(temp);
+    } else {
+      dispatchers_reward.addReward({ name, time, tag, type, grade, prize, score, img }).then((res) => {
+        if (res.code === 100) {
+          temp = {
+            showDialog: true,
+            title: '添加成功！',
+            state: 'success',
+            showButton: false,
+          };
+          setTimeout(() => {
+            temp = { showDialog: false };
+            setDialog(temp);
+            loadData('奖励总览');
+          }, 1000);
+        } else {
+          temp = {
+            showDialog: true,
+            title: '添加失败！',
+            text: '添加失败，请稍后再试',
+            state: 'failure',
+            showButton: true,
+          };
+        }
+        setDialog(temp);
+      });
+    }
   };
   return (
     <div className={styles.box}>
@@ -290,7 +342,7 @@ function Reward() {
         {
           tabConfig.map((item, index) => {
             return (
-              <div id={item.id} className={item.type === currentType ? styles.tab_sel : styles.tab} key={index} onClick={() => { loadData(item.type, item.tag); }}>{item.tag}</div>
+              <div id={item.id} className={item.tag === currentTag ? styles.tab_sel : styles.tab} key={index} onClick={() => { loadData(item.tag); }}>{item.tag}</div>
             );
           })
         }
@@ -300,7 +352,7 @@ function Reward() {
         visible={loading}
       >
         <div className={styles.content}>
-          {currentType !== 'change_tag' &&
+          {currentTag !== '添加奖励' &&
             <table className={styles.table}>
               <thead>
                 <tr className={styles.tr}>
@@ -325,14 +377,14 @@ function Reward() {
                       <td>{item.Prize}</td>
                       <td>{item.Time}</td>
                       <td>{item.Score}</td>
-                      <td onClick={() => getDetail(item.Id)} style={{ cursor: 'pointer' }}>查看</td>
+                      <td onClick={() => deleteReward(item.Id)} style={{ cursor: 'pointer' }}>删除</td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
           }
-          {currentType === 'change_tag' && switchTag === '添加奖励' &&
+          {currentTag === '添加奖励' &&
           <div className={styles.tag_page}>
             <div className={styles.details_box}>
               <div className={styles.details_left}>
@@ -341,7 +393,7 @@ function Reward() {
                   <select className={styles.detail_option} onChange={() => changeSel(0)} id="select0">
                     {
                     currentOption[0].map((item, index) => {
-                      return <option value={index} key={index}>{item}</option>;
+                      if (index === option[0]) { return <option value={index} key={index} selected>{item}</option>; } else return <option value={index} key={index}>{item}</option>;
                     })
                   }
                   </select>
@@ -351,7 +403,7 @@ function Reward() {
                   <select className={styles.detail_option} onChange={() => changeSel(1)} id="select1">
                     {
                     currentOption[1].map((item, index) => {
-                      return <option value={index} key={index}>{item}</option>;
+                      if (index === option[1]) { return <option value={index} key={index} selected>{item}</option>; } else return <option value={index} key={index}>{item}</option>;
                     })
                   }
                   </select>
@@ -361,7 +413,7 @@ function Reward() {
                   <select className={styles.detail_option} onChange={() => changeSel(2)} id="select2">
                     {
                     currentOption[2].map((item, index) => {
-                      return <option value={index} key={index}>{item}</option>;
+                      if (index === option[2]) { return <option value={index} key={index} selected>{item}</option>; } else return <option value={index} key={index}>{item}</option>;
                     })
                   }
                   </select>
@@ -371,14 +423,14 @@ function Reward() {
                   <select className={styles.detail_option} onChange={() => changeSel(3)} id="select3">
                     {
                     currentOption[3].map((item, index) => {
-                      return <option value={index} key={index}>{item}</option>;
+                      if (index === option[3]) { return <option value={index} key={index} selected>{item}</option>; } else return <option value={index} key={index}>{item}</option>;
                     })
                   }
                   </select>
                 </div>
                 <div className={styles.detail}>
                   <div className={styles.detail_tab}>请选择获奖时间:</div>
-                  <Input type="date" style={styles.input} />
+                  <Input type="date" style={styles.input} id="time" />
                 </div>
                 <div className={styles.detail}>
                   <div className={styles.detail_tab}>请输入奖项名称:</div>
@@ -387,7 +439,7 @@ function Reward() {
               </div>
               <div className={styles.details_right}>
                 <div className={styles.detail}>
-                  <div className={styles.detail_tab}>请上传奖项证明:</div>
+                  <div className={styles.detail_tab}>请上传奖项证明(可选):</div>
                   <input type="file" accept="image/jpeg, image/png, image/jpg" id="img" onChange={uploadPic} />
                 </div>
                 <div className={styles.detail}>
@@ -406,7 +458,7 @@ function Reward() {
                 </div>
               </div>
             </div>
-            <Button content="确认提交" myClassName={styles.button} />
+            <Button content="确认提交" myClassName={styles.button} myClick={addReward} />
           </div>
           }
         </div>

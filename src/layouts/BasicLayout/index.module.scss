@@ -13,13 +13,14 @@
   height: 0;
 }
 ::-webkit-scrollbar-track {
-  box-shadow: inset var(--buttonBlackShadow),
-    inset var(--buttonWhiteShadow);
+  // box-shadow: inset var(--buttonBlackShadow),
+  //   inset var(--buttonWhiteShadow);
   border-radius: 3px;
+  background-color: var(--bgGray);
 }
 ::-webkit-scrollbar-thumb {
   border-radius: .5rem;
   box-shadow: var(--buttonBlackShadow),
     var(--buttonWhiteShadow);
-  background-color: var(--bgGray);
+  background-color: var(--bgShadow);
 }

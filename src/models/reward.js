@@ -12,7 +12,7 @@ export default {
   effects: (dispatch) => ({
     async addReward(props) {
       const data = await rewardService.addReward(props);
-      console.log(data);
+      return (data);
     },
     async getReward(rewardId) {
       const data = await rewardService.getReward(rewardId);
@@ -32,7 +32,7 @@ export default {
     },
     async deleteReward(rewardId) {
       const data = await rewardService.deleteReward(rewardId);
-      console.log(data);
+      return data;
     },
   }),
 };
