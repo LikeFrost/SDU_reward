@@ -4,6 +4,7 @@ import styles from './index.module.scss';
 import store from '@/store';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
+import crypto from 'crypto-js';
 
 function Info() {
   const history = useHistory();
@@ -74,6 +75,7 @@ function Info() {
         state: 'failure',
         showButton: true,
       };
+      setDialog(temp);
     } else if (telephone && !regTelephone.test(telephone)) {
       temp = {
         showDialog: true,
@@ -82,6 +84,7 @@ function Info() {
         state: 'failure',
         showButton: true,
       };
+      setDialog(temp);
     } else if (new_password && !regPassword.test(new_password)) {
       temp = {
         showDialog: true,
@@ -90,6 +93,7 @@ function Info() {
         state: 'failure',
         showButton: true,
       };
+      setDialog(temp);
     } else if (new_password != repeat_password) {
       temp = {
         showDialog: true,
@@ -98,27 +102,39 @@ function Info() {
         state: 'failure',
         showButton: true,
       };
+      setDialog(temp);
     } else {
-      const password = new_password;
+      const password = crypto.MD5(dataUser.Id + crypto.MD5(new_password).toString()).toString(); // md5 加盐
+      console.log(dataUser.Id);
       dispatchers_user.updateUser({ password, name, telephone }).then((res) => {
-        console.log(res);
+        if (res === 100) {
+          temp = {
+            showDialog: true,
+            title: '修改成功！',
+            text: '修改成功，2s后返回主页',
+            state: 'success',
+            showButton: false,
+          };
+          setDialog(temp);
+          setTimeout(() => {
+            changeCurrent(0);
+            temp = {
+              showDialog: false,
+            };
+            setDialog(temp);
+          }, 2000);
+        } else {
+          temp = {
+            showDialog: true,
+            title: '修改失败！',
+            text: '修改失败，请稍后再试',
+            state: 'failure',
+            showButton: true,
+          };
+          setDialog(temp);
+        }
       });
-      temp = {
-        showDialog: true,
-        title: '修改成功！',
-        text: '修改成功，2s后返回主页',
-        state: 'success',
-        showButton: false,
-      };
-      setTimeout(() => {
-        changeCurrent(0);
-        temp = {
-          showDialog: false,
-        };
-        setDialog(temp);
-      }, 2000);
     }
-    setDialog(temp);
   };
   return (
     <>

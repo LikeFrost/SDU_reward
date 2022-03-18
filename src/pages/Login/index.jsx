@@ -4,7 +4,7 @@ import { useHistory } from 'ice';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
 import store from '@/store';
-import utils from '../../utils.js';
+import crypto from 'crypto-js';
 
 function Login() {
   const history = useHistory();
@@ -26,8 +26,7 @@ function Login() {
       };
       setDialog(temp);
     } else {
-      const password = utils.md5(utils.md5(id + utils.md5(input_password)));
-      console.log(password);
+      const password = crypto.MD5(id + crypto.MD5(input_password).toString()).toString(); // md5 加盐
       dispatchers_user.login({ id, password }).then((res) => {
         if (res === 100) {
           temp = {
