@@ -1,3 +1,4 @@
+/* eslint-disable @iceworks/best-practices/no-http-url */
 import { request } from 'ice';
 
 export default {

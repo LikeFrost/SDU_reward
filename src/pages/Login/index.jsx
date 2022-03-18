@@ -4,6 +4,7 @@ import { useHistory } from 'ice';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
 import store from '@/store';
+import utils from '../../utils.js';
 
 function Login() {
   const history = useHistory();
@@ -12,7 +13,7 @@ function Login() {
   const [, dispatchers_user] = store.useModel('user');
   const login = () => {
     const id = document.getElementById('id').value;
-    const password = document.getElementById('password').value;
+    const input_password = document.getElementById('password').value;
     const regId = /^\d{9}$|^\d{12}$/;
     let temp;
     if (!regId.test(id)) {
@@ -25,6 +26,8 @@ function Login() {
       };
       setDialog(temp);
     } else {
+      const password = utils.md5(utils.md5(id + utils.md5(input_password)));
+      console.log(password);
       dispatchers_user.login({ id, password }).then((res) => {
         if (res === 100) {
           temp = {
