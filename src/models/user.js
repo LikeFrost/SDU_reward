@@ -30,7 +30,7 @@ export default {
     async updateUser(props) {
       const data = await userService.updateUser(props);
       dispatch.user.update(data);
-      return data.code;
+      return { code: data.code, msg: data.msg };
     },
     async getUser() {
       const data = await userService.getUser();

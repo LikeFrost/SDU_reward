@@ -336,6 +336,15 @@ function Reward() {
       });
     }
   };
+  const getToday = () => {
+    const newDay = new Date();
+    const year = newDay.getFullYear();
+    let month = newDay.getMonth() + 1;
+    let day = newDay.getDate();
+    month = month < 10 ? `0${ month}` : month;
+    day = day < 10 ? `0${ day}` : day;
+    return `${year}-${month}-${day}`;
+  };
   return (
     <div className={styles.box}>
       <div className={styles.tab_array}>
@@ -430,7 +439,7 @@ function Reward() {
                 </div>
                 <div className={styles.detail}>
                   <div className={styles.detail_tab}>请选择获奖时间:</div>
-                  <Input type="date" style={styles.input} id="time" />
+                  <Input type="date" style={styles.input} id="time" min="2018-09-01" max={getToday()} />
                 </div>
                 <div className={styles.detail}>
                   <div className={styles.detail_tab}>请输入奖项名称:</div>

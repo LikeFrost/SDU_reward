@@ -13,8 +13,8 @@ function Info() {
       if (res === 102) {
         let temp = {
           showDialog: true,
-          title: '登录过期！',
-          text: '登录过期，请重新登录!',
+          title: '登录过期!',
+          text: '登录过期,请重新登录!',
           state: 'failure',
           showButton: false,
         };
@@ -29,16 +29,14 @@ function Info() {
       }
     });
   }, []);
-  const [dataShow, dispatchers_show] = store.useModel('show');
-  const { show } = dataShow;
+  const [, dispatchers_show] = store.useModel('show');
   const { setShow } = dispatchers_show;
   const [, dispatchers_now] = store.useModel('now');
   const { setNow } = dispatchers_now;
   const [dataMenu, dispatchers_menu] = store.useModel('menu');
   const { menuConfig } = dataMenu;
   const { setMenu } = dispatchers_menu;
-  const [dataDialog, dispatchers_dialog] = store.useModel('dialog');
-  const { dialogConfig } = dataDialog;
+  const [, dispatchers_dialog] = store.useModel('dialog');
   const { setDialog } = dispatchers_dialog;
   const [dataUser, dispatchers_user] = store.useModel('user');
   const [showInput, setShowInput] = useState(false);
@@ -65,12 +63,12 @@ function Info() {
     // eslint-disable-next-line @iceworks/best-practices/no-secret-info
     const regPassword = /^[a-zA-z0-9.!@$%^&*?]{6,20}$/;
     const regTelephone = /^1\d{10}$/;
-    const regName = /^[\u4e00-\u9fa5]{2,5}$/;
+    const regName = /^[\u4e00-\u9fa5]{2,10}$/;
     let temp;
     if (name && !regName.test(name)) {
       temp = {
         showDialog: true,
-        title: '修改失败！',
+        title: '修改失败!',
         text: '请输入正确的姓名',
         state: 'failure',
         showButton: true,
@@ -79,7 +77,7 @@ function Info() {
     } else if (telephone && !regTelephone.test(telephone)) {
       temp = {
         showDialog: true,
-        title: '修改失败！',
+        title: '修改失败!',
         text: '请输入正确的手机号',
         state: 'failure',
         showButton: true,
@@ -88,30 +86,29 @@ function Info() {
     } else if (new_password && !regPassword.test(new_password)) {
       temp = {
         showDialog: true,
-        title: '修改失败！',
-        text: '密码须为6-20位，仅可包含数字、大小写字母以及.!@$%^&*?',
+        title: '修改失败!',
+        text: '密码须为6-20位,仅可包含数字、大小写字母以及.!@$%^&*?',
         state: 'failure',
         showButton: true,
       };
       setDialog(temp);
-    } else if (new_password != repeat_password) {
+    } else if (new_password !== repeat_password) {
       temp = {
         showDialog: true,
-        title: '修改失败！',
-        text: '两次密码不相同，请核对后提交',
+        title: '修改失败!',
+        text: '两次密码不相同,请核对后提交',
         state: 'failure',
         showButton: true,
       };
       setDialog(temp);
     } else {
-      const password = crypto.MD5(dataUser.Id + crypto.MD5(new_password).toString()).toString(); // md5 加盐
-      console.log(dataUser.Id);
+      const password = new_password ? crypto.MD5(dataUser.Id + crypto.MD5(new_password).toString()).toString() : new_password; // md5 加盐
       dispatchers_user.updateUser({ password, name, telephone }).then((res) => {
-        if (res === 100) {
+        if (res.code === 100) {
           temp = {
             showDialog: true,
-            title: '修改成功！',
-            text: '修改成功，2s后返回主页',
+            title: '修改成功!',
+            text: '修改成功,2s后返回主页',
             state: 'success',
             showButton: false,
           };
@@ -126,8 +123,8 @@ function Info() {
         } else {
           temp = {
             showDialog: true,
-            title: '修改失败！',
-            text: '修改失败，请稍后再试',
+            title: '修改失败!',
+            text: res.msg,
             state: 'failure',
             showButton: true,
           };
