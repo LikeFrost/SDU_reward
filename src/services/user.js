@@ -8,6 +8,12 @@ export default {
       { id: props.id, password: props.password },
     );
   },
+  async logUp(props) {
+    return await request.post(
+      '/user/logup',
+      { id: props.id, password: props.password },
+    );
+  },
   async updateUser(props) {
     return await request.post(
       '/user',

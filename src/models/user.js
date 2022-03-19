@@ -19,7 +19,13 @@ export default {
       const data = await userService.login(props);
       dispatch.user.update(data);
       sessionStorage.setItem('token', data.token);
-      return data.code;
+      return { code: data.code, msg: data.msg };
+    },
+    async logUp(props) {
+      const data = await userService.logUp(props);
+      dispatch.user.update(data);
+      sessionStorage.setItem('token', data.token);
+      return { code: data.code, msg: data.msg };
     },
     async updateUser(props) {
       const data = await userService.updateUser(props);
