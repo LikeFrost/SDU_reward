@@ -43,7 +43,7 @@ function Login() {
               showDialog: false,
             };
             setDialog(temp);
-            history.push('home');
+            history.push('/home');
           }, 2000);
         } else {
           temp = {
@@ -100,7 +100,7 @@ function Login() {
               showDialog: false,
             };
             setDialog(temp);
-            history.push('home');
+            history.push('/home');
           }, 2000);
         } else {
           temp = {
