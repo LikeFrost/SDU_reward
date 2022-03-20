@@ -1,12 +1,13 @@
 /* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
-import { Loading } from '@alifd/next';
+import { Loading, Upload } from '@alifd/next';
 import store from '@/store';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
 
 function Reward() {
+  const [lastTag, setLastTag] = useState('添加奖励');
   const tabConfig = [
     { tag: '奖励总览' },
     { tag: '研究创新' },
@@ -15,7 +16,7 @@ function Reward() {
     { tag: '美育素养' },
     { tag: '体育素养' },
     {
-      tag: '添加奖励',
+      tag: lastTag,
       id: 'change_tag',
     },
   ];
@@ -202,6 +203,7 @@ function Reward() {
     setCurrentTag(tag);
     setLoading(true);
     setOption([0, 0, 0, 0]);
+    setLastTag('添加奖励');
     setCurrentOption([initialOption[0], initialOption[1][option[0]], initialOption[2][option[0]][option[1]], initialOption[3][option[0]][option[1]][option[2]]]);
     if (tag === '奖励总览') {
       dispatchers_reward.getAllReward().then(() => {
@@ -244,6 +246,10 @@ function Reward() {
       setDialog(temp);
     });
   };
+  const getDetail = (id) => {
+    setLastTag('奖励详情');
+    setCurrentTag('奖励详情');
+  };
   const changeSel = (index) => {
     const select = [
       parseInt(document.getElementById('select0').value, 10),
@@ -259,45 +265,25 @@ function Reward() {
     setOption(temp);
     setCurrentOption([initialOption[0], initialOption[1][option[0]], initialOption[2][option[0]][option[1]], initialOption[3][option[0]][option[1]][option[2]]]);
   };
-  const getBase64Image = (img) => {
-    const canvas = document.createElement('canvas');
-    const width = img.naturalWidth || img.width;
-    const height = img.naturalHeight || img.height;
-    canvas.width = width;
-    canvas.height = height;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, width, height);
-    const ext = img.src.substring(img.src.lastIndexOf('.') + 1).toLowerCase();
-    const dataURL = canvas.toDataURL(`image/${ ext}`);
-    return dataURL;
-  };
-  const [img_base64, setImg_base64] = useState();
+  const [img_src, setSrc] = useState();
   const uploadPic = () => {
-    setImg_base64('');
-    let url;
-    if (navigator.userAgent.indexOf('MSIE') >= 1) { // IE
-      url = document.getElementById('img').value;
-    } else if (navigator.userAgent.indexOf('Firefox') > 0) { // Firefox
-      url = window.URL.createObjectURL(document.getElementById('img').files.item(0));
-    } else if (navigator.userAgent.indexOf('Chrome') > 0) { // Chrome
-      url = window.URL.createObjectURL(document.getElementById('img').files[0]);
-    }
-    const image = new Image();
-    image.src = url;
-    image.onload = () => {
-      setImg_base64(getBase64Image(image));
-      // console.log(img_base64.length);
+    const img = document.getElementById('img').files[0];
+    const f = new FileReader();
+    f.readAsDataURL(img);
+    f.onload = () => {
+      setSrc(f.result);
     };
+    console.log(img_src);
   };
   const addReward = () => {
     const name = document.getElementById('name').value;
     const time = document.getElementById('time').value;
-    const tag = currentOption[0][option[0]];
-    const type = currentOption[1][option[1]];
-    const grade = currentOption[2][option[2]];
-    const prize = currentOption[3][option[3]];
-    const score = '0';
-    // const img = img_base64;
+    const tag = option[0];
+    const type = option[1];
+    const grade = option[2];
+    const prize = option[3];
+    const score = 0;
+    // const img = img_src;
     const img = 'img';
     let temp;
     if (!name || !time || !tag || !type || !grade) {
@@ -361,7 +347,7 @@ function Reward() {
         visible={loading}
       >
         <div className={styles.content}>
-          {currentTag !== '添加奖励' &&
+          {currentTag !== '添加奖励' && currentTag !== '奖励详情' &&
             <table className={styles.table}>
               <thead>
                 <tr className={styles.tr}>
@@ -386,7 +372,7 @@ function Reward() {
                       <td>{item.Prize}</td>
                       <td>{item.Time}</td>
                       <td>{item.Score}</td>
-                      <td onClick={() => deleteReward(item.Id)} style={{ cursor: 'pointer' }}>删除</td>
+                      <td><span style={{ cursor: 'pointer' }} onClick={() => getDetail(item.id)}>查看</span>&nbsp;|&nbsp;<span style={{ cursor: 'pointer' }} onClick={() => deleteReward(item.Id)} >删除</span></td>
                     </tr>
                   );
                 })}
@@ -449,17 +435,17 @@ function Reward() {
               <div className={styles.details_right}>
                 <div className={styles.detail}>
                   <div className={styles.detail_tab}>请上传奖项证明(可选):</div>
-                  <input type="file" accept="image/jpeg, image/png, image/jpg" id="img" onChange={uploadPic} />
+                  <input type="file" onChange={uploadPic} id="img" />
                 </div>
                 <div className={styles.detail}>
                   {
-                    img_base64 &&
+                    img_src &&
                     <div className={styles.img_box}>
-                      <img src={img_base64} className={styles.img} alt="预览图片" />
+                      <img src={img_src} className={styles.img} alt="预览图片" />
                     </div>
                   }
                   {
-                    !img_base64 &&
+                    !img_src &&
                     <div className={styles.img_box}>
                       <img src="../../../img/preview.svg" className={styles.img_preview} alt="预览图片" />
                     </div>
@@ -469,6 +455,10 @@ function Reward() {
             </div>
             <Button content="确认提交" myClassName={styles.button} myClick={addReward} />
           </div>
+          }
+          {
+            currentTag === '奖励详情' &&
+            <div />
           }
         </div>
       </Loading>

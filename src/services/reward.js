@@ -4,7 +4,7 @@ import { request } from 'ice';
 export default {
   async addReward(props) {
     return await request.post(
-      'http://182.92.196.63:3000/v1/reward',
+      '/reward',
       { tag: props.tag, type: props.type, name: props.name, grade: props.grade, prize: props.prize, score: props.score, time: props.time, img: props.img },
       { headers: {
         Authorization: sessionStorage.getItem('token'),
