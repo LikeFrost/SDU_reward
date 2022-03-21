@@ -3,12 +3,29 @@ import { request } from 'ice';
 
 export default {
   async addReward(props) {
+    const formData = new FormData();
+    formData.append(
+      'img', props.img,
+      'tag', props.tag,
+      'type', props.type,
+      'name', props.name,
+      'grade', props.grade,
+      'prize', props.prize,
+      'score', props.score,
+      'time', props.time,
+    );
     return await request.post(
       '/reward',
-      { tag: props.tag, type: props.type, name: props.name, grade: props.grade, prize: props.prize, score: props.score, time: props.time, img: props.img },
-      { headers: {
-        Authorization: sessionStorage.getItem('token'),
-      } },
+      formData,
+      {
+        headers: {
+          Authorization: sessionStorage.getItem('token'),
+          'Content-Type': 'multipart/form-data',
+        },
+        transformRequest: (data, headers) => {
+          return formData;
+        },
+      },
     );
   },
   async getReward(rewardId) {

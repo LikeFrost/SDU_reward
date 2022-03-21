@@ -273,7 +273,6 @@ function Reward() {
     f.onload = () => {
       setSrc(f.result);
     };
-    console.log(img_src);
   };
   const addReward = () => {
     const name = document.getElementById('name').value;
@@ -284,12 +283,12 @@ function Reward() {
     const prize = option[3];
     const score = 0;
     // const img = img_src;
-    const img = 'img';
+    const img = document.getElementById('img').files[0];
     let temp;
-    if (!name || !time || !tag || !type || !grade) {
+    if (!name || !time || !tag || !type || !grade || !img) {
       temp = {
         showDialog: true,
-        title: '信息不完整！',
+        title: '信息不完整!',
         text: '请检查各项信息是否完整后重试!',
         state: 'failure',
         showButton: true,
