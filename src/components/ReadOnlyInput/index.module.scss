@@ -1,0 +1,17 @@
+.input {
+  background-color: var(--bgGray);
+  box-shadow: inset var(--textBlackShadow),
+    inset var(--textWhiteShadow);
+  outline-style: none;
+  border: 0;
+  height: 2rem;
+  border-radius: .2rem;
+  padding: .3rem;
+  color: var(--textColor);
+  font-size: 1rem;
+  letter-spacing: .1rem;
+}
+.input::placeholder {
+  color: var(--placeholderColor);
+  font-size: 1rem;
+}

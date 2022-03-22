@@ -4,16 +4,14 @@ import { request } from 'ice';
 export default {
   async addReward(props) {
     const formData = new FormData();
-    formData.append(
-      'img', props.img,
-      'tag', props.tag,
-      'type', props.type,
-      'name', props.name,
-      'grade', props.grade,
-      'prize', props.prize,
-      'score', props.score,
-      'time', props.time,
-    );
+    formData.append('img', props.img);
+    formData.append('tag', props.tag);
+    formData.append('type', props.type);
+    formData.append('name', props.name);
+    formData.append('grade', props.grade);
+    formData.append('prize', props.prize);
+    formData.append('score', props.score);
+    formData.append('time', props.time);
     return await request.post(
       '/reward',
       formData,

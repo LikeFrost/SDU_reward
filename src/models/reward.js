@@ -3,10 +3,14 @@ import rewardService from '@/services/reward';
 export default {
   state: {
     reward: [],
+    detail: {},
   },
   reducers: {
     update(pre, now) {
       pre.reward = now;
+    },
+    updateDetail(pre, now) {
+      pre.detail = now;
     },
   },
   effects: (dispatch) => ({
@@ -16,7 +20,8 @@ export default {
     },
     async getReward(rewardId) {
       const data = await rewardService.getReward(rewardId);
-      dispatch.reward.update(data.reward);
+      dispatch.reward.updateDetail(data.reward);
+      return data;
     },
     async getRewardByTag(tag) {
       const data = await rewardService.getRewardByTag(tag);

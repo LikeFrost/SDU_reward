@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 /* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
@@ -5,6 +6,7 @@ import { Loading, Upload } from '@alifd/next';
 import store from '@/store';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
+import ReadOnlyInput from '@/components/ReadOnlyInput';
 
 function Reward() {
   const [lastTag, setLastTag] = useState('添加奖励');
@@ -189,6 +191,7 @@ function Reward() {
   const [loading, setLoading] = useState(false);
   const [dataReward, dispatchers_reward] = store.useModel('reward');
   const { reward } = dataReward;
+  const { detail } = dataReward;
   const [, dispatchers_dialog] = store.useModel('dialog');
   const { setDialog } = dispatchers_dialog;
   useEffect(() => {
@@ -202,8 +205,8 @@ function Reward() {
   const loadData = (tag) => {
     setCurrentTag(tag);
     setLoading(true);
-    setOption([0, 0, 0, 0]);
     setLastTag('添加奖励');
+    setOption([0, 0, 0, 0]);
     setCurrentOption([initialOption[0], initialOption[1][option[0]], initialOption[2][option[0]][option[1]], initialOption[3][option[0]][option[1]][option[2]]]);
     if (tag === '奖励总览') {
       dispatchers_reward.getAllReward().then(() => {
@@ -247,8 +250,26 @@ function Reward() {
     });
   };
   const getDetail = (id) => {
-    setLastTag('奖励详情');
-    setCurrentTag('奖励详情');
+    dispatchers_reward.getReward(id).then((res) => {
+      if (res.code !== 100) {
+        const temp = {
+          showDialog: true,
+          title: '查看失败!',
+          text: res.msg,
+          state: 'failure',
+          showButton: true,
+        };
+        setDialog(temp);
+      } else {
+        setSrc(`data:image/jpg;base64,${detail.Img}`);
+        setLoading(true);
+        setTimeout(() => {
+          setLoading(false);
+          setLastTag('奖励详情');
+          setCurrentTag('奖励详情');
+        }, 500);
+      }
+    });
   };
   const changeSel = (index) => {
     const select = [
@@ -277,12 +298,11 @@ function Reward() {
   const addReward = () => {
     const name = document.getElementById('name').value;
     const time = document.getElementById('time').value;
-    const tag = option[0];
-    const type = option[1];
-    const grade = option[2];
-    const prize = option[3];
+    const tag = currentOption[0][option[0]];
+    const type = currentOption[1][option[1]];
+    const grade = currentOption[2][option[2]];
+    const prize = currentOption[3][option[3]];
     const score = 0;
-    // const img = img_src;
     const img = document.getElementById('img').files[0];
     let temp;
     if (!name || !time || !tag || !type || !grade || !img) {
@@ -299,7 +319,7 @@ function Reward() {
         if (res.code === 100) {
           temp = {
             showDialog: true,
-            title: '添加成功！',
+            title: '添加成功!',
             state: 'success',
             showButton: false,
           };
@@ -371,7 +391,7 @@ function Reward() {
                       <td>{item.Prize}</td>
                       <td>{item.Time}</td>
                       <td>{item.Score}</td>
-                      <td><span style={{ cursor: 'pointer' }} onClick={() => getDetail(item.id)}>查看</span>&nbsp;|&nbsp;<span style={{ cursor: 'pointer' }} onClick={() => deleteReward(item.Id)} >删除</span></td>
+                      <td><span style={{ cursor: 'pointer' }} onClick={() => getDetail(item.Id)}>查看</span>&nbsp;|&nbsp;<span style={{ cursor: 'pointer' }} onClick={() => deleteReward(item.Id)} >删除</span></td>
                     </tr>
                   );
                 })}
@@ -433,7 +453,7 @@ function Reward() {
               </div>
               <div className={styles.details_right}>
                 <div className={styles.detail}>
-                  <div className={styles.detail_tab}>请上传奖项证明(可选):</div>
+                  <div className={styles.detail_tab}>请上传奖项证明:</div>
                   <input type="file" onChange={uploadPic} id="img" />
                 </div>
                 <div className={styles.detail}>
@@ -455,9 +475,57 @@ function Reward() {
             <Button content="确认提交" myClassName={styles.button} myClick={addReward} />
           </div>
           }
-          {
-            currentTag === '奖励详情' &&
-            <div />
+          {currentTag === '奖励详情' &&
+          <div className={styles.tag_page}>
+            <div className={styles.details_box}>
+              <div className={styles.details_left}>
+                <div className={styles.detail}>
+                  <div className={styles.detail_tab}>奖项类别:</div>
+                  <ReadOnlyInput style={styles.input} value={detail.Tag} />
+                </div>
+                <div className={styles.detail}>
+                  <div className={styles.detail_tab}>赋分项目:</div>
+                  <ReadOnlyInput style={styles.input} value={detail.Type} />
+                </div>
+                <div className={styles.detail}>
+                  <div className={styles.detail_tab}>奖项级别:</div>
+                  <ReadOnlyInput style={styles.input} value={detail.Grade} />
+                </div>
+                <div className={styles.detail}>
+                  <div className={styles.detail_tab}>奖项等次:</div>
+                  <ReadOnlyInput style={styles.input} value={detail.Prize} />
+                </div>
+                <div className={styles.detail}>
+                  <div className={styles.detail_tab}>获奖时间:</div>
+                  <ReadOnlyInput style={styles.input} value={detail.Time} type="date" />
+                </div>
+                <div className={styles.detail}>
+                  <div className={styles.detail_tab}>奖项名称:</div>
+                  <ReadOnlyInput style={styles.input} value={detail.Name} />
+                </div>
+              </div>
+              <div className={styles.details_right}>
+                <div className={styles.detail}>
+                  <div className={styles.detail_tab}>奖项证明:</div>
+                </div>
+                <div className={styles.detail}>
+                  {
+                  img_src &&
+                  <div className={styles.img_box}>
+                    <img src={img_src} className={styles.img} alt="预览图片" />
+                  </div>
+                }
+                  {
+                  !img_src &&
+                  <div className={styles.img_box}>
+                    <img src="../../../img/preview.svg" className={styles.img_preview} alt="预览图片" />
+                  </div>
+                }
+                </div>
+              </div>
+            </div>
+            <Button content="返&nbsp;&nbsp;回" myClassName={styles.button} myClick={() => loadData('奖励总览')} />
+          </div>
           }
         </div>
       </Loading>
