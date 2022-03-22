@@ -2,11 +2,13 @@
 /* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
-import { Loading, Upload } from '@alifd/next';
+import { Loading } from '@alifd/next';
 import store from '@/store';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
 import ReadOnlyInput from '@/components/ReadOnlyInput';
+import { useHistory } from 'react-router';
+import getScoreArr from '@/tools/forReward';
 
 function Reward() {
   const [lastTag, setLastTag] = useState('添加奖励');
@@ -50,7 +52,7 @@ function Reward() {
       ],
       [
         ['未选择'],
-        ['未选择', '优秀团干部', '最美团支书', '优秀共青团员', '军训优秀学员', '五四评比优秀个人', '自强之星', '榜样的力量年度人物', '优秀学生干部', '优秀班长', '优秀学生', '三号学生', '十佳班长', '十佳团员',
+        ['未选择', '优秀团干部', '最美团支书', '优秀共青团员', '军训优秀学员', '五四评比优秀个人', '自强之星', '榜样的力量年度人物', '优秀学生干部', '优秀班长', '优秀学生', '三好学生', '十佳班长', '十佳团员',
           '先进班集体-班长/团支书', '先进班集体-班委支委', '优良学风班-班长/团支书', '优良学风班-班委支委', '先进团支部-团支书', '先进团支部-宣传/组织委员', '十佳团支部-团支书', '十佳团支部-宣传/组织委员', '学生组织', '社团负责人'],
         ['未选择', '志愿服务先进个人', '十佳志愿者', '志愿服务先进集体第一负责人', '志愿服务先进集体副部长/干事', '坚持志愿服务并有典型事迹'],
       ],
@@ -115,7 +117,7 @@ function Reward() {
         ],
         [
           ['未选择'],
-          ['未选择', '国家级表彰', '省级表彰', '校级表彰', '院级表彰', '校级立项', '院级立项'],
+          ['未选择', '国家级表彰', '省级表彰', '校级表彰', '院级表彰'],
           ['未选择', '国家级表彰', '省级表彰', '校级表彰', '院级表彰', '校级立项', '院级立项'],
           ['未选择', '国家级表彰', '省级表彰', '校级表彰', '院级表彰', '校级立项', '院级立项'],
           ['未选择', '一等奖', '二等奖', '三等奖'],
@@ -176,8 +178,8 @@ function Reward() {
           ['未选择', '破纪录', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
           ['未选择', '破纪录', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
           ['未选择', '破纪录', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
-          ['未选择', '破纪录', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
-          ['未选择', '破纪录', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
+          ['未选择', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '第七名', '第八名', '一等奖', '二等奖', '三等奖'],
+          ['未选择', '第一名', '第二名', '第三名', '第四名', '第五名', '第六名', '一等奖', '二等奖', '三等奖'],
         ],
         [
           ['未选择'], ['未获奖'], ['未获奖'],
@@ -185,6 +187,7 @@ function Reward() {
       ],
     ],
   ];
+  const scoreArr = getScoreArr();
   const [option, setOption] = useState([0, 0, 0, 0]);
   const [currentOption, setCurrentOption] = useState([initialOption[0], initialOption[1][0], initialOption[2][0][0], initialOption[3][0][0][0]]);
   const [currentTag, setCurrentTag] = useState('奖励总览');
@@ -194,19 +197,39 @@ function Reward() {
   const { detail } = dataReward;
   const [, dispatchers_dialog] = store.useModel('dialog');
   const { setDialog } = dispatchers_dialog;
+  const history = useHistory();
   useEffect(() => {
     setLoading(true);
-    dispatchers_reward.getAllReward().then(() => {
-      setTimeout(() => {
-        setLoading(false);
-      });
-    }, 1000);
+    dispatchers_reward.getAllReward().then((res) => {
+      if (res === 100) {
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+      } else if (res === 102) {
+        let temp = {
+          showDialog: true,
+          title: '登录过期!',
+          text: '登录过期,请重新登录!',
+          state: 'failure',
+          showButton: false,
+        };
+        setDialog(temp);
+        setTimeout(() => {
+          history.push('/');
+          temp = {
+            showDialog: false,
+          };
+          setDialog(temp);
+        }, 1000);
+      }
+    });
   }, []);
   const loadData = (tag) => {
     setCurrentTag(tag);
     setLoading(true);
     setLastTag('添加奖励');
     setOption([0, 0, 0, 0]);
+    setSrc('');
     setCurrentOption([initialOption[0], initialOption[1][option[0]], initialOption[2][option[0]][option[1]], initialOption[3][option[0]][option[1]][option[2]]]);
     if (tag === '奖励总览') {
       dispatchers_reward.getAllReward().then(() => {
@@ -229,7 +252,7 @@ function Reward() {
         loadData(currentTag);
         temp = {
           showDialog: true,
-          title: '删除成功！',
+          title: '删除成功!',
           state: 'success',
           showButton: false,
         };
@@ -240,8 +263,8 @@ function Reward() {
       } else {
         temp = {
           showDialog: true,
-          title: '删除失败！',
-          text: '删除失败，请稍后再试',
+          title: '删除失败!',
+          text: '删除失败,请稍后再试',
           state: 'failure',
           showButton: true,
         };
@@ -261,7 +284,6 @@ function Reward() {
         };
         setDialog(temp);
       } else {
-        setSrc(`data:image/jpg;base64,${detail.Img}`);
         setLoading(true);
         setTimeout(() => {
           setLoading(false);
@@ -302,7 +324,7 @@ function Reward() {
     const type = currentOption[1][option[1]];
     const grade = currentOption[2][option[2]];
     const prize = currentOption[3][option[3]];
-    const score = 0;
+    const score = scoreArr[option[0]][option[1]][option[2]][option[3]];
     const img = document.getElementById('img').files[0];
     let temp;
     if (!name || !time || !tag || !type || !grade || !img) {
@@ -331,8 +353,8 @@ function Reward() {
         } else {
           temp = {
             showDialog: true,
-            title: '添加失败！',
-            text: '添加失败，请稍后再试',
+            title: '添加失败!',
+            text: res.msg,
             state: 'failure',
             showButton: true,
           };
@@ -510,13 +532,13 @@ function Reward() {
                 </div>
                 <div className={styles.detail}>
                   {
-                  img_src &&
+                  detail.Img &&
                   <div className={styles.img_box}>
-                    <img src={img_src} className={styles.img} alt="预览图片" />
+                    <img src={`data:image/jpg;base64,${detail.Img}`} className={styles.img} alt="预览图片" />
                   </div>
                 }
                   {
-                  !img_src &&
+                  !detail.Img &&
                   <div className={styles.img_box}>
                     <img src="../../../img/preview.svg" className={styles.img_preview} alt="预览图片" />
                   </div>

@@ -30,6 +30,7 @@ export default {
     async getAllReward() {
       const data = await rewardService.getAllReward();
       dispatch.reward.update(data.reward);
+      return data.code;
     },
     async updateReward(props) {
       const data = await rewardService.updateReward(props);
