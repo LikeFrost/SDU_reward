@@ -13,7 +13,7 @@ export default {
       },
       {
         title: '奖励管理',
-        component: 'Reward',
+        component: sessionStorage.getItem('auth') === 'admin' ? 'Student' : 'Reward',
         sel: false,
       },
       {

@@ -9,6 +9,7 @@ import crypto from 'crypto-js';
 function Info() {
   const history = useHistory();
   useEffect(() => {
+    console.log(user);
     dispatchers_user.getUser().then((res) => {
       if (res === 102) {
         let temp = {
@@ -39,6 +40,7 @@ function Info() {
   const [, dispatchers_dialog] = store.useModel('dialog');
   const { setDialog } = dispatchers_dialog;
   const [dataUser, dispatchers_user] = store.useModel('user');
+  const { user } = dataUser;
   const [showInput, setShowInput] = useState(false);
   const changeCurrent = (index) => {
     // eslint-disable-next-line prefer-const
@@ -102,7 +104,7 @@ function Info() {
       };
       setDialog(temp);
     } else {
-      const password = new_password ? crypto.MD5(dataUser.Id + crypto.MD5(new_password).toString()).toString() : new_password; // md5 加盐
+      const password = new_password ? crypto.MD5(user.Id + crypto.MD5(new_password).toString()).toString() : new_password; // md5 加盐
       dispatchers_user.updateUser({ password, name, telephone }).then((res) => {
         if (res.code === 100) {
           temp = {
@@ -144,19 +146,19 @@ function Info() {
           <div className={styles.detail_table}>
             <div className={styles.detail}>
               <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名</div>
-              <div className={styles.content}>{showInput ? <Input type="text" placeholder="请完善姓名信息" id="name" /> : dataUser.Username || '请完善姓名信息'}</div>
+              <div className={styles.content}>{showInput ? <Input type="text" placeholder="请完善姓名信息" id="name" /> : user.Username || '请完善姓名信息'}</div>
             </div>
             <div className={styles.detail}>
               <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号</div>
-              <div className={styles.content}>{dataUser.Id}</div>
+              <div className={styles.content}>{user.Id}</div>
             </div>
             <div className={styles.detail}>
               <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年级</div>
-              <div className={styles.content}>{dataUser.Id.slice(0, 4)}</div>
+              <div className={styles.content}>{user.Id ? user.Id.slice(0, 4) : ''}</div>
             </div>
             <div className={styles.detail}>
               <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;手机号</div>
-              <div className={styles.content}>{showInput ? <Input type="text" placeholder="请完善联系方式" id="telephone" /> : dataUser.Telephone || '请完善联系方式'}</div>
+              <div className={styles.content}>{showInput ? <Input type="text" placeholder="请完善联系方式" id="telephone" /> : user.Telephone || '请完善联系方式'}</div>
             </div>
             {showInput &&
             <div className={styles.detail}>

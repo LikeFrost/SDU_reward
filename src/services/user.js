@@ -31,4 +31,14 @@ export default {
       } },
     );
   },
+  async getAllUsers() {
+    return await request.get(
+      '/user/all',
+      {
+        headers: {
+          Authorization: sessionStorage.getItem('token'),
+        },
+      },
+    );
+  },
 };

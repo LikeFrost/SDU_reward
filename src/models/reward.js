@@ -32,9 +32,10 @@ export default {
       dispatch.reward.update(data.reward);
       return data.code;
     },
-    async updateReward(props) {
-      const data = await rewardService.updateReward(props);
-      console.log(data);
+    async getUserReward(uid) {
+      const data = await rewardService.getUserReward(uid);
+      dispatch.reward.update(data.reward);
+      return data.code;
     },
     async deleteReward(rewardId) {
       const data = await rewardService.deleteReward(rewardId);

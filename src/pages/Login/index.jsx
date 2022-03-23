@@ -43,7 +43,7 @@ function Login() {
               showDialog: false,
             };
             setDialog(temp);
-            history.push('/home');
+            history.replace('/home');
           }, 2000);
         } else {
           temp = {

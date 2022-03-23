@@ -9,6 +9,7 @@ import Reward from '@/pages/Reward';
 import Suggestion from '@/pages/Suggestion';
 import Home from '@/pages/Home';
 import Dialog from '@/components/Dialog';
+import Student from '@/pages/Student';
 
 (function () {
   const throttle = function (type, name, obj = window) {
@@ -57,7 +58,7 @@ const BasicLayout = () => {
       setDevice(getDevice(deviceWidth));
     });
   }
-
+  const auth = sessionStorage.getItem('auth');
   return (
     <ConfigProvider device={device}>
       <>
@@ -67,6 +68,7 @@ const BasicLayout = () => {
           {now === 'Home' && <Home />}
           {now === 'Info' && <Info />}
           {now === 'Reward' && <Reward />}
+          {now === 'Student' && <Student />}
           {now === 'Suggestion' && <Suggestion />}
           <Menu />
         </div>

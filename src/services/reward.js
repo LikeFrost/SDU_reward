@@ -52,6 +52,16 @@ export default {
       },
     );
   },
+  async getUserReward(uid) {
+    return await request.get(
+      `/reward/byUserId/${uid}`,
+      {
+        headers: {
+          Authorization: sessionStorage.getItem('token'),
+        },
+      },
+    );
+  },
   async updateReward(props) {
     return await request.post(
         `/reward/${props.rewardId}`,
