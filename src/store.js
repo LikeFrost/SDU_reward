@@ -5,6 +5,7 @@ import menu from './models/menu';
 import dialog from './models/dialog';
 import user from './models/user';
 import reward from './models/reward';
+import warn from './models/warn';
 
 const store = createStore({
   show,
@@ -13,6 +14,7 @@ const store = createStore({
   dialog,
   user,
   reward,
+  warn,
 });
 
 export default store;

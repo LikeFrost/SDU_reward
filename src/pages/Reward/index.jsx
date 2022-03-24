@@ -237,13 +237,23 @@ function Reward() {
           setLoading(false);
         }, 500);
       });
-    } else {
+    } else if (tag !== '添加奖励' && tag !== '奖励详情') {
       dispatchers_reward.getRewardByTag(tag).then(() => {
         setTimeout(() => {
           setLoading(false);
         }, 500);
       });
     }
+  };
+  const [, dispatchers_warn] = store.useModel('warn');
+  const { setWarn } = dispatchers_warn;
+  const preDelete = (id) => {
+    const temp1 = {
+      showWarn: true,
+      title: '确定要删除吗?',
+      submit: () => { deleteReward(id); },
+    };
+    setWarn(temp1);
   };
   const deleteReward = (id) => {
     dispatchers_reward.deleteReward(id).then((res) => {
@@ -269,6 +279,7 @@ function Reward() {
           showButton: true,
         };
       }
+      setWarn({ showWarn: false });
       setDialog(temp);
     });
   };
@@ -413,7 +424,7 @@ function Reward() {
                       <td>{item.Prize}</td>
                       <td>{item.Time}</td>
                       <td>{item.Score}</td>
-                      <td><span style={{ cursor: 'pointer' }} onClick={() => getDetail(item.Id)}>查看</span>&nbsp;|&nbsp;<span style={{ cursor: 'pointer' }} onClick={() => deleteReward(item.Id)} >删除</span></td>
+                      <td><span style={{ cursor: 'pointer' }} onClick={() => getDetail(item.Id)}>查看</span>&nbsp;|&nbsp;<span style={{ cursor: 'pointer' }} onClick={() => preDelete(item.Id)} >删除</span></td>
                     </tr>
                   );
                 })}

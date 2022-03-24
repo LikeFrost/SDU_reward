@@ -49,6 +49,14 @@
   padding: 1vw 0;
   overflow: scroll;
 }
+.listContent{
+  border-radius: 0.5rem;
+  box-shadow: var(--blackShadow), var(--whiteShadow);
+  width: 80vw;
+  height: 70vh;
+  padding: 1vw 0;
+  overflow: scroll;
+}
 .tip {
   color: var(--textColor);
   text-shadow: var(--textBlackShadow), var(--textWhiteShadow);
@@ -59,7 +67,7 @@
   text-align: center;
   width: 76vw;
   user-select: none;
-  margin-left: -2rem;
+  margin:0,auto;
 }
 .tr {
   line-height: 3rem;
@@ -134,4 +142,22 @@
 .button {
   display: flex;
   width: max-content;
+}
+.search{
+  width: 76vw;
+  height: 7vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--textColor);
+  font-size: 1rem;
+}
+.searchInput{
+  width: 20vw;
+  height: 6vh;
+  padding: .3rem;
+  margin: 0 1rem;
+}
+.searchButton{
+  height: 3rem;
 }

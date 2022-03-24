@@ -41,4 +41,14 @@ export default {
       },
     );
   },
+  async deleteUser(id) {
+    return await request.delete(
+      `/user/${id}`,
+      {
+        headers: {
+          Authorization: sessionStorage.getItem('token'),
+        },
+      },
+    );
+  },
 };

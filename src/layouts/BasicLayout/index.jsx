@@ -10,6 +10,7 @@ import Suggestion from '@/pages/Suggestion';
 import Home from '@/pages/Home';
 import Dialog from '@/components/Dialog';
 import Student from '@/pages/Student';
+import Warn from '@/components/Warn';
 
 (function () {
   const throttle = function (type, name, obj = window) {
@@ -63,12 +64,13 @@ const BasicLayout = () => {
     <ConfigProvider device={device}>
       <>
         <Dialog />
+        <Warn />
         <Nav />
         <div className={styles.content}>
           {now === 'Home' && <Home />}
           {now === 'Info' && <Info />}
-          {now === 'Reward' && <Reward />}
-          {now === 'Student' && <Student />}
+          {now === 'Reward' && auth === 'student' && <Reward />}
+          {now === 'Reward' && auth === 'admin' && <Student />}
           {now === 'Suggestion' && <Suggestion />}
           <Menu />
         </div>

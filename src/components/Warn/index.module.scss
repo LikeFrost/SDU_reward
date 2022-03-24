@@ -1,0 +1,41 @@
+.background {
+  background-color: var(--mask);
+  height: 100vh;
+  width: 100vw;
+  z-index: 999;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card {
+  height: 20vh;
+  border-radius: 1rem;
+  text-align: center;
+  background-color: var(--bgGray);
+  box-shadow: var(--dialogShadow);
+  padding: 3rem;
+  position: relative;
+  letter-spacing: .07rem;
+  transition: .5s all ease;
+}
+.title {
+  color: var(--textColor);
+  text-shadow: var(--textBlackShadow),
+    var(--textWhiteShadow);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.button {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.close {
+  filter: drop-shadow(var(--svgDropShadow));
+}
+.yes{
+  padding: .5rem;
+  width: max-content;
+  margin: 1rem auto;
+}

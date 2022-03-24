@@ -1,11 +1,12 @@
-/* eslint-disable max-lines */
 import React, { useEffect, useState } from 'react';
-import styles from './index.module.scss';
 import { Loading } from '@alifd/next';
 import store from '@/store';
 import Button from '@/components/Button';
 import ReadOnlyInput from '@/components/ReadOnlyInput';
-import { useHistory } from 'react-router';
+import { useHistory } from 'ice';
+import Input from '@/components/Input';
+import styles from './index.module.scss';
+import Warn from '@/components/Warn';
 
 function Student() {
   const tabConfig = [
@@ -13,6 +14,7 @@ function Student() {
     { tag: '学生奖励' },
     { tag: '奖励详情' },
   ];
+  const [tabShow, setTabShow] = useState([1, 0, 0]);
   const [currentTag, setCurrentTag] = useState('学生列表');
   const [loading, setLoading] = useState(false);
   const [dataReward, dispatchers_reward] = store.useModel('reward');
@@ -52,19 +54,18 @@ function Student() {
     setCurrentTag(tag);
     setLoading(true);
     if (tag === '学生列表') {
+      setTabShow([1, 0, 0]);
       dispatchers_user.getAllUsers().then(() => {
         setTimeout(() => {
           setLoading(false);
         }, 500);
       });
+    } if (tag === '学生奖励') {
+      setTabShow([1, 1, 0]);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
-    // else {
-    //   dispatchers_reward.getRewardByTag(tag).then(() => {
-    //     setTimeout(() => {
-    //       setLoading(false);
-    //     }, 500);
-    //   });
-    // }
   };
   const getUserReward = (id) => {
     dispatchers_reward.getUserReward(id).then((res) => {
@@ -81,9 +82,79 @@ function Student() {
         setLoading(true);
         setTimeout(() => {
           setLoading(false);
+          setTabShow([1, 1, 0]);
           setCurrentTag('学生奖励');
         }, 500);
       }
+    });
+  };
+  const getDetail = (id) => {
+    dispatchers_reward.getReward(id).then((res) => {
+      if (res.code !== 100) {
+        const temp = {
+          showDialog: true,
+          title: '查看失败!',
+          text: res.msg,
+          state: 'failure',
+          showButton: true,
+        };
+        setDialog(temp);
+      } else {
+        setLoading(true);
+        setTimeout(() => {
+          setLoading(false);
+          setTabShow([1, 1, 1]);
+          setCurrentTag('奖励详情');
+        }, 500);
+      }
+    });
+  };
+  const [searchName, setName] = useState(0);
+  const [searchId, setId] = useState(0);
+  const searchUser = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setName(document.getElementById('searchName').value);
+      setId(document.getElementById('searchId').value);
+      setLoading(false);
+    }, 500);
+  };
+  const [, dispatchers_warn] = store.useModel('warn');
+  const { setWarn } = dispatchers_warn;
+  const preDelete = (id) => {
+    const temp1 = {
+      showWarn: true,
+      title: '确定要删除吗?',
+      submit: () => { deleteUser(id); },
+    };
+    setWarn(temp1);
+  };
+  const deleteUser = (id) => {
+    dispatchers_user.deleteUser(id).then((res) => {
+      let temp;
+      if (res.code === 100) {
+        loadData(currentTag);
+        temp = {
+          showDialog: true,
+          title: '删除成功!',
+          state: 'success',
+          showButton: false,
+        };
+        setTimeout(() => {
+          temp = { showDialog: false };
+          setDialog(temp);
+        }, 500);
+      } else {
+        temp = {
+          showDialog: true,
+          title: '删除失败!',
+          text: res.msg,
+          state: 'failure',
+          showButton: true,
+        };
+      }
+      setWarn({ showWarn: false });
+      setDialog(temp);
     });
   };
   return (
@@ -92,7 +163,13 @@ function Student() {
         {
           tabConfig.map((item, index) => {
             return (
-              <div className={item.tag === currentTag ? styles.tab_sel : styles.tab} key={index} onClick={() => { loadData(item.tag); }}>{item.tag}</div>
+              <>
+                {tabShow[index] === 1 &&
+                <div className={item.tag === currentTag ? styles.tab_sel : styles.tab} key={index} onClick={() => { loadData(item.tag); }}>
+                  {item.tag}
+                </div>
+              }
+              </>
             );
           })
         }
@@ -101,8 +178,14 @@ function Student() {
         tip={<span className={styles.tip}>加载中</span>}
         visible={loading}
       >
-        <div className={styles.content}>
+        <div className={styles.listContent}>
           {currentTag === '学生列表' &&
+          <>
+            <div className={styles.search}>
+              按姓名搜索:<Input placeholder="请输入姓名" style={styles.searchInput} id="searchName" />
+              按学号搜索:<Input placeholder="请输入学号" style={styles.searchInput} id="searchId" />
+              <Button content="搜&nbsp;&nbsp;索" myClassName={styles.searchButton} myClick={searchUser} />
+            </div>
             <table className={styles.table}>
               <thead>
                 <tr className={styles.tr}>
@@ -116,17 +199,23 @@ function Student() {
               <tbody>
                 {users && users.map((item) => {
                   return (
-                    <tr key={item.Id} className={styles.item}>
-                      <td>{item.Id}</td>
-                      <td>{item.Id ? item.Id.slice(0, 4) : ''}</td>
-                      <td>{item.Username ? item.Username : '待完善'}</td>
-                      <td>{item.Telephone ? item.Telephone : '待完善'}</td>
-                      <td><span style={{ cursor: 'pointer' }} onClick={() => getUserReward(item.Id)}>查看用户奖励</span></td>
-                    </tr>
+                    <>
+                      {
+                      ((!searchId && !searchName) || (searchName && searchName === item.Username && !searchId) || (searchId && searchId === item.Id && !searchName) || ((searchName && searchName === item.Username) && (searchId && searchId === item.Id))) &&
+                      <tr key={item.Id} className={styles.item}>
+                        <td>{item.Id}</td>
+                        <td>{item.Id ? item.Id.slice(0, 4) : ''}</td>
+                        <td>{item.Username ? item.Username : '待完善'}</td>
+                        <td>{item.Telephone ? item.Telephone : '待完善'}</td>
+                        <td><span style={{ cursor: 'pointer' }} onClick={() => getUserReward(item.Id)}>查看奖励</span>&nbsp;|&nbsp;<span style={{ cursor: 'pointer' }} onClick={() => preDelete(item.Id)}>删除用户</span></td>
+                      </tr>
+                    }
+                    </>
                   );
                 })}
               </tbody>
             </table>
+          </>
           }
           {currentTag === '学生奖励' &&
             <table className={styles.table}>
@@ -153,7 +242,7 @@ function Student() {
                       <td>{item.Prize}</td>
                       <td>{item.Time}</td>
                       <td>{item.Score}</td>
-                      <td><span style={{ cursor: 'pointer' }} onClick={() => getDetail(item.Id)}>查看</span>&nbsp;|&nbsp;<span style={{ cursor: 'pointer' }} onClick={() => deleteReward(item.Id)} >删除</span></td>
+                      <td><span style={{ cursor: 'pointer' }} onClick={() => getDetail(item.Id)}>查看</span></td>
                     </tr>
                   );
                 })}

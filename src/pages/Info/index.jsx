@@ -9,7 +9,6 @@ import crypto from 'crypto-js';
 function Info() {
   const history = useHistory();
   useEffect(() => {
-    console.log(user);
     dispatchers_user.getUser().then((res) => {
       if (res === 102) {
         let temp = {
