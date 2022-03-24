@@ -243,6 +243,10 @@ function Reward() {
           setLoading(false);
         }, 500);
       });
+    } else if (tag === '添加奖励') {
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
     }
   };
   const [, dispatchers_warn] = store.useModel('warn');
