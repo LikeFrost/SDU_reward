@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ConfigProvider } from '@alifd/next';
+import { ConfigProvider, ResponsiveGrid } from '@alifd/next';
 import styles from './index.module.scss';
 import Nav from './components/Nav';
 import Menu from './components/Menu';
@@ -60,20 +60,23 @@ const BasicLayout = () => {
     });
   }
   const auth = sessionStorage.getItem('auth');
+  const { Cell } = ResponsiveGrid;
   return (
     <ConfigProvider device={device}>
       <>
-        <Dialog />
-        <Warn />
-        <Nav />
-        <div className={styles.content}>
-          {now === 'Home' && <Home />}
-          {now === 'Info' && <Info />}
-          {now === 'Reward' && auth === 'student' && <Reward />}
-          {now === 'Reward' && auth === 'admin' && <Student />}
-          {now === 'Suggestion' && <Suggestion />}
-          <Menu />
-        </div>
+        <Cell colSpan={12}>
+          <Dialog />
+          <Warn />
+          <Nav />
+          <div className={styles.content}>
+            {now === 'Home' && <Home /> }
+            {now === 'Info' && <Info />}
+            {now === 'Reward' && auth === 'student' && <Reward />}
+            {now === 'Reward' && auth === 'admin' && <Student />}
+            {now === 'Suggestion' && <Suggestion />}
+            <Menu />
+          </div>
+        </Cell>
       </>
     </ConfigProvider>
   );
