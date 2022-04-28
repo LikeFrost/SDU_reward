@@ -138,10 +138,10 @@ function Info() {
   const { Cell } = ResponsiveGrid;
   return (
     <ResponsiveGrid className={styles.box}>
-      <Cell colSpan={5} className={styles.circle}>
+      <Cell colSpan={6} className={styles.circle}>
         <img className={styles.pic} src="../../../img/pic_info.svg" />
       </Cell>
-      <Cell colSpan={5} className={styles.msg}>
+      <Cell colSpan={6} className={styles.msg}>
         <div className={styles.title}>个人信息</div>
         <div className={styles.detail_table}>
           <div className={styles.detail}>
