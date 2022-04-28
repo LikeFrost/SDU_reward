@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Loading } from '@alifd/next';
+import { Loading, ResponsiveGrid } from '@alifd/next';
 import store from '@/store';
 import Button from '@/components/Button';
 import ReadOnlyInput from '@/components/ReadOnlyInput';
@@ -14,6 +14,7 @@ function Student() {
     { tag: '学生奖励' },
     { tag: '奖励详情' },
   ];
+  const { Cell } = ResponsiveGrid;
   const [tabShow, setTabShow] = useState([1, 0, 0]);
   const [currentTag, setCurrentTag] = useState('学生列表');
   const [loading, setLoading] = useState(false);
@@ -251,8 +252,8 @@ function Student() {
           }
           {currentTag === '奖励详情' && detail &&
           <div className={styles.tag_page}>
-            <div className={styles.details_box}>
-              <div className={styles.details_left}>
+            <ResponsiveGrid>
+              <Cell colSpan={6}>
                 <div className={styles.detail}>
                   <div className={styles.detail_tab}>奖项类别:</div>
                   <ReadOnlyInput style={styles.input} value={detail.Tag} />
@@ -277,8 +278,8 @@ function Student() {
                   <div className={styles.detail_tab}>奖项名称:</div>
                   <ReadOnlyInput style={styles.input} value={detail.Name} />
                 </div>
-              </div>
-              <div className={styles.details_right}>
+              </Cell>
+              <Cell colSpan={6}>
                 <div className={styles.detail}>
                   <div className={styles.detail_tab}>奖项证明:</div>
                 </div>
@@ -296,8 +297,8 @@ function Student() {
                   </div>
                 }
                 </div>
-              </div>
-            </div>
+              </Cell>
+            </ResponsiveGrid>
             <Button content="返&nbsp;&nbsp;回" myClassName={styles.button} myClick={() => loadData('学生奖励')} />
           </div>
           }

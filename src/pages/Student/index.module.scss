@@ -49,7 +49,7 @@
   padding: 1vw 0;
   overflow: scroll;
 }
-.listContent{
+.listContent {
   border-radius: 0.5rem;
   box-shadow: var(--blackShadow), var(--whiteShadow);
   width: 80vw;
@@ -67,7 +67,7 @@
   text-align: center;
   width: 76vw;
   user-select: none;
-  margin:0,auto;
+  margin: 0, auto;
 }
 .tr {
   line-height: 3rem;
@@ -143,7 +143,7 @@
   display: flex;
   width: max-content;
 }
-.search{
+.search {
   width: 76vw;
   height: 7vh;
   display: flex;
@@ -152,12 +152,12 @@
   color: var(--textColor);
   font-size: 1rem;
 }
-.searchInput{
+.searchInput {
   width: 20vw;
   height: 6vh;
   padding: .3rem;
   margin: 0 1rem;
 }
-.searchButton{
+.searchButton {
   height: 3rem;
 }
