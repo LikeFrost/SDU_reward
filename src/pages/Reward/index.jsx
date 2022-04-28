@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
-import { Loading } from '@alifd/next';
+import { Loading, ResponsiveGrid } from '@alifd/next';
 import store from '@/store';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
@@ -198,6 +198,7 @@ function Reward() {
   const [, dispatchers_dialog] = store.useModel('dialog');
   const { setDialog } = dispatchers_dialog;
   const history = useHistory();
+  const { Cell } = ResponsiveGrid;
   useEffect(() => {
     setLoading(true);
     dispatchers_reward.getAllReward().then((res) => {
@@ -326,11 +327,31 @@ function Reward() {
   const [img_src, setSrc] = useState();
   const uploadPic = () => {
     const img = document.getElementById('img').files[0];
-    const f = new FileReader();
-    f.readAsDataURL(img);
-    f.onload = () => {
-      setSrc(f.result);
-    };
+    if (img.type !== 'image/jpeg') {
+      const temp = {
+        showDialog: true,
+        title: '图片格式错误',
+        text: '仅支持jpg格式的图片!',
+        state: 'failure',
+        showButton: true,
+      };
+      setDialog(temp);
+    } else if (img.size / 1024 > 200) {
+      const temp = {
+        showDialog: true,
+        title: '图片过大!',
+        text: '图片大小不能超过200M!',
+        state: 'failure',
+        showButton: true,
+      };
+      setDialog(temp);
+    } else {
+      const f = new FileReader();
+      f.readAsDataURL(img);
+      f.onload = () => {
+        setSrc(f.result);
+      };
+    }
   };
   const addReward = () => {
     const name = document.getElementById('name').value;
@@ -437,8 +458,8 @@ function Reward() {
           }
           {currentTag === '添加奖励' &&
           <div className={styles.tag_page}>
-            <div className={styles.details_box}>
-              <div className={styles.details_left}>
+            <ResponsiveGrid>
+              <Cell colSpan={6}>
                 <div className={styles.detail}>
                   <div className={styles.detail_tab}>请选择奖项类别:</div>
                   <select className={styles.detail_option} onChange={() => changeSel(0)} id="select0">
@@ -487,8 +508,8 @@ function Reward() {
                   <div className={styles.detail_tab}>请输入奖项名称:</div>
                   <Input id="name" style={styles.input} />
                 </div>
-              </div>
-              <div className={styles.details_right}>
+              </Cell>
+              <Cell colSpan={6}>
                 <div className={styles.detail}>
                   <div className={styles.detail_tab}>请上传奖项证明:</div>
                   <input type="file" onChange={uploadPic} id="img" />
@@ -507,15 +528,15 @@ function Reward() {
                     </div>
                   }
                 </div>
-              </div>
-            </div>
+              </Cell>
+            </ResponsiveGrid>
             <Button content="确认提交" myClassName={styles.button} myClick={addReward} />
           </div>
           }
           {currentTag === '奖励详情' &&
           <div className={styles.tag_page}>
-            <div className={styles.details_box}>
-              <div className={styles.details_left}>
+            <ResponsiveGrid>
+              <Cell colSpan={6}>
                 <div className={styles.detail}>
                   <div className={styles.detail_tab}>奖项类别:</div>
                   <ReadOnlyInput style={styles.input} value={detail.Tag} />
@@ -540,8 +561,8 @@ function Reward() {
                   <div className={styles.detail_tab}>奖项名称:</div>
                   <ReadOnlyInput style={styles.input} value={detail.Name} />
                 </div>
-              </div>
-              <div className={styles.details_right}>
+              </Cell>
+              <Cell colSpan={6}>
                 <div className={styles.detail}>
                   <div className={styles.detail_tab}>奖项证明:</div>
                 </div>
@@ -559,8 +580,8 @@ function Reward() {
                   </div>
                 }
                 </div>
-              </div>
-            </div>
+              </Cell>
+            </ResponsiveGrid>
             <Button content="返&nbsp;&nbsp;回" myClassName={styles.button} myClick={() => loadData('奖励总览')} />
           </div>
           }

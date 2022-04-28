@@ -5,34 +5,23 @@
 .circle {
   box-shadow: inset var(--circleBlackShadow),
     inset var(--circleWhiteShadow);
-  height: 125vh;
-  width: 125vh;
-  border-radius: 100%;
-  position: absolute;
-  top: -18vh;
-  left: -33vh;
+  height: 100vh;
+  border-radius:0 50% 50% 0;
   transition: all .5s ease;
 }
 .pic {
-  height: 70vh;
-  width: 70vh;
-  position: relative;
-  left: 40vh;
-  top: 30vh;
+  height: 45%;
+  margin: 200px 20px;
   transition: all .5s ease;
   filter: drop-shadow(var(--svgDropShadow));
 }
 .msg {
-  position: absolute;
-  left: 105vh;
-  top: 15vh;
   color: var(--textColor);
   font-weight: 600;
   font-size: 1.1rem;
   text-shadow: var(--textBlackShadow),
     var(--textWhiteShadow);
-  width: 30vw;
-  padding: 2rem;
+  padding: 100px;
   transition: all .5s ease;
   text-align: center;
 }

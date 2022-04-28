@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ConfigProvider } from '@alifd/next';
+import { ConfigProvider, ResponsiveGrid } from '@alifd/next';
 import Dialog from '@/components/Dialog';
 
 (function () {
@@ -47,13 +47,15 @@ const UserLayout = ({ children }) => {
       setDevice(getDevice(deviceWidth));
     });
   }
-
+  const { Cell } = ResponsiveGrid;
   return (
     <ConfigProvider device={device}>
-      <>
+      <ResponsiveGrid>
         <Dialog />
-        {children}
-      </>
+        <Cell colSpan={12}>
+          {children}
+        </Cell>
+      </ResponsiveGrid>
     </ConfigProvider>
   );
 };

@@ -5,6 +5,7 @@ import store from '@/store';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import crypto from 'crypto-js';
+import { ResponsiveGrid } from '@alifd/next';
 
 function Info() {
   const history = useHistory();
@@ -134,49 +135,48 @@ function Info() {
       });
     }
   };
+  const { Cell } = ResponsiveGrid;
   return (
-    <>
-      <div className={styles.box}>
-        <div className={styles.circle}>
-          <img className={styles.pic} src="../../../img/pic_info.svg" />
-        </div>
-        <div className={styles.msg}>
-          <div className={styles.title}>个人信息</div>
-          <div className={styles.detail_table}>
-            <div className={styles.detail}>
-              <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名</div>
-              <div className={styles.content}>{showInput ? <Input type="text" placeholder="请完善姓名信息" id="name" /> : user.Username || '请完善姓名信息'}</div>
-            </div>
-            <div className={styles.detail}>
-              <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号</div>
-              <div className={styles.content}>{user.Id}</div>
-            </div>
-            <div className={styles.detail}>
-              <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年级</div>
-              <div className={styles.content}>{user.Id ? user.Id.slice(0, 4) : ''}</div>
-            </div>
-            <div className={styles.detail}>
-              <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;手机号</div>
-              <div className={styles.content}>{showInput ? <Input type="text" placeholder="请完善联系方式" id="telephone" /> : user.Telephone || '请完善联系方式'}</div>
-            </div>
-            {showInput &&
+    <ResponsiveGrid className={styles.box}>
+      <Cell colSpan={5} className={styles.circle}>
+        <img className={styles.pic} src="../../../img/pic_info.svg" />
+      </Cell>
+      <Cell colSpan={5} className={styles.msg}>
+        <div className={styles.title}>个人信息</div>
+        <div className={styles.detail_table}>
+          <div className={styles.detail}>
+            <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓名</div>
+            <div className={styles.content}>{showInput ? <Input type="text" placeholder="请完善姓名信息" id="name" /> : user.Username || '请完善姓名信息'}</div>
+          </div>
+          <div className={styles.detail}>
+            <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;学号</div>
+            <div className={styles.content}>{user.Id}</div>
+          </div>
+          <div className={styles.detail}>
+            <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年级</div>
+            <div className={styles.content}>{user.Id ? user.Id.slice(0, 4) : ''}</div>
+          </div>
+          <div className={styles.detail}>
+            <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;手机号</div>
+            <div className={styles.content}>{showInput ? <Input type="text" placeholder="请完善联系方式" id="telephone" /> : user.Telephone || '请完善联系方式'}</div>
+          </div>
+          {showInput &&
             <div className={styles.detail}>
               <div className={styles.tab}>&nbsp;&nbsp;&nbsp;&nbsp;新密码</div>
               <div className={styles.content}><Input type="password" placeholder="请输入新密码" id="new_password" /></div>
             </div>}
-            {showInput &&
+          {showInput &&
             <div className={styles.detail}>
               <div className={styles.tab}>确认密码</div>
               <div className={styles.content}><Input type="password" placeholder="确认新密码" id="repeat_password" /></div>
             </div>}
-          </div>
-          <div className={styles.button_array}>
-            <Button myClassName={styles.button_half} myClick={() => changeCurrent(0)} content="返回主页" />
-            <Button myClassName={styles.button_half} myClick={showInput ? changeInfo : () => setShowInput(true)} content={showInput ? '确认修改' : '修改信息'} />
-          </div>
         </div>
-      </div>
-    </>
+        <div className={styles.button_array}>
+          <Button myClassName={styles.button_half} myClick={() => changeCurrent(0)} content="返回主页" />
+          <Button myClassName={styles.button_half} myClick={showInput ? changeInfo : () => setShowInput(true)} content={showInput ? '确认修改' : '修改信息'} />
+        </div>
+      </Cell>
+    </ResponsiveGrid>
   );
 }
 

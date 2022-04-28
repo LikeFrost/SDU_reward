@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from '@/components/Button';
+import { ResponsiveGrid } from '@alifd/next';
 import styles from './index.module.scss';
 import store from '@/store';
 
@@ -12,6 +13,7 @@ function Home() {
   const [dataMenu, dispatchers_menu] = store.useModel('menu');
   const { menuConfig } = dataMenu;
   const { setMenu } = dispatchers_menu;
+  const { Cell } = ResponsiveGrid;
   const changeCurrent = (index) => {
     // eslint-disable-next-line prefer-const
     let temp = JSON.parse(JSON.stringify(menuConfig));

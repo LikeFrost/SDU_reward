@@ -67,15 +67,21 @@ const BasicLayout = () => {
         <Cell colSpan={12}>
           <Dialog />
           <Warn />
-          <Nav />
-          <div className={styles.content}>
-            {now === 'Home' && <Home /> }
-            {now === 'Info' && <Info />}
-            {now === 'Reward' && auth === 'student' && <Reward />}
-            {now === 'Reward' && auth === 'admin' && <Student />}
-            {now === 'Suggestion' && <Suggestion />}
+          <Cell colSpan={12}>
+            <Nav />
+          </Cell>
+          <Cell colSpan={10}>
+            <div className={styles.content}>
+              {now === 'Home' && <Home /> }
+              {now === 'Info' && <Info />}
+              {now === 'Reward' && auth === 'student' && <Reward />}
+              {now === 'Reward' && auth === 'admin' && <Student />}
+              {now === 'Suggestion' && <Suggestion />}
+            </div>
+          </Cell>
+          <Cell colSpan={2} >
             <Menu />
-          </div>
+          </Cell>
         </Cell>
       </>
     </ConfigProvider>
