@@ -287,7 +287,7 @@ function Student() {
                   {
                   detail.Img &&
                   <div className={styles.img_box}>
-                    <img src={`data:image/jpg;base64,${detail.Img}`} className={styles.img} alt="预览图片" />
+                    <img src={detail.Img} className={styles.img} alt="预览图片" />
                   </div>
                 }
                   {
